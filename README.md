@@ -1,103 +1,83 @@
-# VoiceFlow
+# VoiceFlow — Sito web
 
-Dettatura vocale **push-to-talk per Windows**. Selezioni un campo di testo in qualsiasi app
-(Slack, Gmail, Cursor, Word…), tieni premuta una hotkey globale, parli, rilasci: il testo
-trascritto viene incollato dove si trova il cursore. Zero copia-incolla manuale.
+Landing, download e (in prospettiva) gestione licenza per **VoiceFlow**, l'app di dettatura vocale
+push-to-talk per Windows: tieni premuta una hotkey, parli, rilasci, e il testo viene incollato
+nell'app attiva.
 
-> Nome `VoiceFlow` è **di lavoro**: la decisione di branding finale (dominio/trademark) è al Giorno 6.
-> Scope completo, feature MVP e decisioni aperte: [`docs/scope.md`](docs/scope.md).
+Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy su **Vercel**.
 
-## Struttura (monorepo)
+> Questo repo contiene **solo il sito web**. L'app desktop (Electron + TypeScript) è un progetto
+> separato.
+
+🌐 **Live:** <https://voiceflow-flax.vercel.app>
+
+## Struttura
 
 ```
 .
-├── docs/           # scope, riepiloghi, decisioni
-├── app-desktop/    # Electron + TypeScript — il prodotto
-│   └── src/
-│       ├── main/            # tray, uiohook (hotkey), overlay, lifecycle, IPC
-│       ├── preload/         # contextBridge con canali IPC in whitelist
-│       ├── renderer/        # UI: finestra impostazioni + overlay registrazione
-│       └── services/
-│           ├── audio/           # getUserMedia + MediaRecorder
-│           ├── transcription/   # client → Supabase Edge Function
-│           ├── input-injection/ # clipboard swap + Ctrl+V (nut-js)
-│           └── storage/         # better-sqlite3 → electron-store → memoria
-├── app-web/        # Next.js App Router + Tailwind + Supabase — landing/download
-└── supabase/       # Edge Function `transcribe` (proxy Whisper, tiene la API key)
+├── app-web/        # Next.js App Router + Tailwind + shadcn/ui + Supabase
+│   ├── app/            # rotte: `/` (landing) e `/download`
+│   ├── components/     # componenti UI (base shadcn/ui)
+│   └── lib/            # client Supabase (browser/server) + utils
+└── docs/           # note di deploy e ambiente
 ```
+
+> Il progetto Next vive in `app-web/`, che è anche la **Root Directory** configurata su Vercel.
 
 ## Requisiti
 
-- **Windows 10/11 64-bit**
-- Node.js 20+ (testato con Node 25) e npm
-- Microfono + connessione internet (trascrizione cloud)
+- Node.js 20+ e npm
+- Un progetto **Supabase dedicato a VoiceFlow** (isolamento dati: non riusare progetti di altri prodotti)
 
-## App desktop (Electron)
-
-```bash
-cd app-desktop
-npm install
-npm run dev          # avvia in dev con hot-reload (main/preload/renderer)
-npm run typecheck    # tsc --noEmit
-npm run build:win    # build NSIS su Windows (electron-builder)
-```
-
-Config: copia `.env.example` in `.env` e imposta `VITE_SUPABASE_URL` / `VITE_TRANSCRIBE_FUNCTION_URL`
-e `VITE_SUPABASE_ANON_KEY`. **Mai** mettere `OPENAI_API_KEY` qui o nel bundle distribuito.
-
-Sicurezza Electron: `contextIsolation: true`, `nodeIntegration: false`, `sandbox: true`,
-IPC solo tramite canali in whitelist nel preload. Nessuna API Node esposta al renderer.
-
-## Sito web (Next.js)
+## Avvio
 
 ```bash
 cd app-web
 npm install
 cp .env.example .env.local   # riempi i placeholder
 npm run dev                  # http://localhost:3000
-npm run build                # build di produzione (verificata)
 ```
 
-Deploy Vercel (team `StackUp`) con **root directory `app-web`**. Il progetto Supabase deve essere
-**dedicato a VoiceFlow** (isolamento dati: non riusare progetti di altri prodotti).
-
-## Edge Function di trascrizione
-
-La chiave OpenAI vive solo server-side. Vedi [`supabase/README.md`](supabase/README.md):
+Altri comandi:
 
 ```bash
-supabase link --project-ref <project-ref>
-supabase secrets set OPENAI_API_KEY=sk-...
-supabase functions deploy transcribe
+npm run build    # build di produzione
+npm run start    # serve la build
+npx tsc --noEmit # typecheck
 ```
 
-Il client invia `multipart/form-data` con `audio` (+ `language` opzionale) e riceve `{ text }`.
+## Variabili d'ambiente
 
-## Stato (Giorno 1)
+In `app-web/.env.local` (gitignored). Vedi `app-web/.env.example`.
 
-- **Fase 1** — scope e decisioni: ✅ [`docs/scope.md`](docs/scope.md)
-- **Fase 2** — scaffolding desktop (Electron + TS, hotkey, tray, overlay, storage, IPC): ✅
-- **Fase 3** — scaffolding web (Next.js + Tailwind + shadcn base + Supabase client): ✅ (deploy Vercel da collegare)
-- **Fase 4** — rifinitura v0 (impostazioni, overlay, gestione errori, landing shell): ✅
-- Riepilogo, rischi e decisioni aperte: [`docs/day1-summary.md`](docs/day1-summary.md)
+| Variabile | Dove vive | Note |
+|-----------|-----------|------|
+| `NEXT_PUBLIC_SUPABASE_URL` | client + server | pubblica |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | client + server | pubblica |
+| `SUPABASE_SERVICE_ROLE_KEY` | **solo server** | mai nel client |
+| `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | **solo server** | placeholder finché non c'è checkout |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | client | placeholder |
 
-### Verifica locale
+## Deploy
 
-```bash
-cd app-desktop && npm run typecheck && npx vite build   # ✅
-cd app-web     && npm run typecheck && npm run build    # ✅
-```
+Vercel, progetto `voiceflow` (scope `Vertex` / `vertex-9`), **Root Directory `app-web`**,
+framework Next.js. Git integration attiva su `main`: ogni push su `main` deploya in produzione,
+ogni PR ottiene una preview automatica.
 
-Il loop end-to-end (hold hotkey → parla → rilascia → incolla nella app attiva) va verificato a mano
-con `npm run dev`: richiede microfono, hook globale e una Edge Function `transcribe` deployata.
+- Produzione → <https://voiceflow-flax.vercel.app> (`/` e `/download`)
+- Deploy manuale da CLI: `cd app-web && vercel --prod`
 
-## Rischi noti principali
+Dettagli e checklist in [`docs/deploy.md`](docs/deploy.md).
 
-- **Hook globale** (`uiohook-napi`): può essere bloccato da antivirus/EDR e va testato che non
-  intercetti l'input normale. Fallback: toggle manuale dal tray.
-- **Iniezione**: clipboard swap + `Ctrl+V` non funziona in terminali/campi protetti → il testo resta
-  in clipboard e va incollato a mano.
-- **Origine del modulo nativo**: `better-sqlite3` è opzionale e ha fallback automatico
-  (`electron-store`, poi storage in memoria).
+Prima di usare auth/licenze reali, le variabili `NEXT_PUBLIC_SUPABASE_*` (e la service role, lato
+server) vanno impostate anche nelle **Environment Variables** del progetto Vercel, per Production e
+Preview.
 
-Dettagli completi in `docs/scope.md` §8.
+## Stato
+
+- Landing shell dark (hero, "come funziona", CTA "Scarica per Windows") → `/`
+- Pagina `/download` (requisiti + privacy + istruzioni dev)
+- shadcn/ui base: `components.json`, `lib/utils.ts` (`cn`), `components/ui/button.tsx`
+- Client Supabase App Router: `lib/supabase/client.ts` (+ `server.ts` per i cookie)
+
+Ancora da fare: checkout/licenza (Stripe), area account, design finale.
