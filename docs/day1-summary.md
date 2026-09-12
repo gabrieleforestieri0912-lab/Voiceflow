@@ -11,7 +11,7 @@ Lo scope completo è in [`scope.md`](scope.md). Sintesi delle scelte operative:
 | Tema | Decisione |
 |------|-----------|
 | Nome | `VoiceFlow` come **nome di lavoro** fino al Giorno 6 (seconda scelta: `Detta`) |
-| Monorepo | Un repo con `/app-desktop` + `/app-web` + `/supabase` + `/docs` |
+| Monorepo (storico) | Un repo con `/app-desktop` + `/app-web` + `/supabase` + `/docs` — poi separato: sito in `Vertex/Web/voiceflow` (root), desktop in `Vertex/Desktop/voiceflow` |
 | App desktop | Electron + TypeScript, `electron-builder` (NSIS), output `dist-electron/` |
 | Hotkey | Push-to-talk globale, default `Ctrl+Space`, via `uiohook-napi` |
 | Iniezione | Clipboard swap + `Ctrl+V` simulato (`@nut-tree-fork/nut-js`) |
@@ -19,7 +19,7 @@ Lo scope completo è in [`scope.md`](scope.md). Sintesi delle scelte operative:
 | Trascrizione | Cloud-only, `whisper-1` proxato da Edge Function Supabase |
 | Storage | `better-sqlite3` opzionale → fallback `electron-store` → fallback memoria |
 | Finestra | Nessuna finestra principale di default: tray + overlay pill + impostazioni on-demand |
-| Deploy web | Vercel team `StackUp`, root directory `app-web`; Supabase **dedicato** |
+| Deploy web | Vercel team `StackUp`, Root Directory **root** (prima `app-web`); Supabase **dedicato** |
 | Fuori scope MVP | Modes LLM, vocabolario, meeting assistant, file transcription, modelli locali, auth/licenza, updater |
 
 ## 2. Cosa funziona oggi
@@ -38,7 +38,7 @@ Lo scope completo è in [`scope.md`](scope.md). Sintesi delle scelte operative:
   ancora invariata (~1.1s).
 - Errori user-facing per microfono negato/assente, audio troppo breve/lungo, rete/timeout, incolla fallito.
 
-### Sito web (`app-web`)
+### Sito web (ora in root, prima `app-web`)
 
 - `npm install` pulito, `npm run typecheck` ✅, `npm run build` ✅ → rotte statiche `/` e `/download`.
 - Landing shell dark coerente (hero, "come funziona", CTA "Scarica per Windows").
@@ -101,7 +101,7 @@ Queste attività richiedono credenziali/accessi che non ho in questo ambiente:
 1. **Progetto Supabase dedicato** — da creare in dashboard e collegare con `supabase link`.
    Poi `supabase secrets set OPENAI_API_KEY=...` e `supabase functions deploy transcribe`.
    Senza questo, il loop end-to-end non può trascrivere (l'app mostra l'errore esplicativo).
-2. **Deploy Vercel** (team `StackUp`, root directory `app-web`) — richiede login Vercel.
+2. **Deploy Vercel** (team `StackUp`, Root Directory root) — richiede login Vercel.
 3. **Remote Git e PR** — il repo locale **non ha remote configurato** e non ci sono ancora commit.
    Non ho eseguito `git push` (esplicitamente vietato dal brief). Per aprire la PR:
    ```bash
@@ -118,7 +118,7 @@ Queste attività richiedono credenziali/accessi che non ho in questo ambiente:
 
 - [x] `docs/scope.md` completo
 - [x] `app-desktop` build + typecheck puliti; tray/overlay/impostazioni implementati
-- [x] `app-web` build + typecheck puliti; landing + `/download` shell
+- [x] sito web build + typecheck puliti; landing + `/download` shell
 - [x] Edge Function `transcribe` scritta (deploy da fare)
 - [ ] Loop end-to-end verificato su Windows reale (manuale)
 - [ ] 20 cicli senza processi orfani (manuale)

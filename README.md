@@ -7,7 +7,7 @@ nell'app attiva.
 Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy su **Vercel**.
 
 > Questo repo contiene **solo il sito web**. L'app desktop (Electron + TypeScript) è un progetto
-> separato.
+> separato in `Vertex/Desktop/voiceflow`.
 
 🌐 **Live:** <https://voiceflow-flax.vercel.app>
 
@@ -15,14 +15,11 @@ Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy s
 
 ```
 .
-├── app-web/        # Next.js App Router + Tailwind + shadcn/ui + Supabase
-│   ├── app/            # rotte: `/` (landing) e `/download`
-│   ├── components/     # componenti UI (base shadcn/ui)
-│   └── lib/            # client Supabase (browser/server) + utils
+├── app/            # Next.js App Router: `/` (landing) e `/download`
+├── components/     # componenti UI (base shadcn/ui)
+├── lib/            # client Supabase (browser/server) + utils
 └── docs/           # note di deploy e ambiente
 ```
-
-> Il progetto Next vive in `app-web/`, che è anche la **Root Directory** configurata su Vercel.
 
 ## Requisiti
 
@@ -32,7 +29,6 @@ Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy s
 ## Avvio
 
 ```bash
-cd app-web
 npm install
 cp .env.example .env.local   # riempi i placeholder
 npm run dev                  # http://localhost:3000
@@ -48,7 +44,7 @@ npx tsc --noEmit # typecheck
 
 ## Variabili d'ambiente
 
-In `app-web/.env.local` (gitignored). Vedi `app-web/.env.example`.
+In `.env.local` (gitignored). Vedi `.env.example`.
 
 | Variabile | Dove vive | Note |
 |-----------|-----------|------|
@@ -60,12 +56,12 @@ In `app-web/.env.local` (gitignored). Vedi `app-web/.env.example`.
 
 ## Deploy
 
-Vercel, progetto `voiceflow` (scope `Vertex` / `vertex-9`), **Root Directory `app-web`**,
+Vercel, progetto `voiceflow` (scope `Vertex` / `vertex-9`), **Root Directory vuota (root)**,
 framework Next.js. Git integration attiva su `main`: ogni push su `main` deploya in produzione,
 ogni PR ottiene una preview automatica.
 
 - Produzione → <https://voiceflow-flax.vercel.app> (`/` e `/download`)
-- Deploy manuale da CLI: `cd app-web && vercel --prod`
+- Deploy manuale da CLI: `vercel --prod` (dalla root)
 
 Dettagli e checklist in [`docs/deploy.md`](docs/deploy.md).
 

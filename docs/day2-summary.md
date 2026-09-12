@@ -54,7 +54,7 @@
 
 ## 2. Verifiche
 
-- `npx tsc --noEmit` → OK (app-desktop + app-web).
+- `npx tsc --noEmit` → OK (app-desktop nel repo Desktop + sito web in root).
 - `npx vite build` → OK (client + electron_main + electron_preload) — 13s tailwind, bundle ~254kB.
 - IPC whitelist (`preload/index.ts`) aggiornata: `permissions:*`, `onboarding:*`, `onboarding:reset-ui` / `onboarding:show`.
 - **Crash safety**:
@@ -66,7 +66,8 @@
 ## 3. Come testare — Checkpoint 1 (permesso concesso vs negato, no crash)
 
 ```bash
-cd app-desktop
+# nel repo Desktop/voiceflow:
+cd "C:/Users/Utente/Documents/Vertex/Desktop/voiceflow"
 npm run dev
 ```
 

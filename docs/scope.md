@@ -109,7 +109,7 @@ Obiettivo Giorno 6: **loop core affidabile + scaffolding solido**. Tutto ciò ch
 - **G1 (oggi):** scope + repo init + checkpoint (questo documento).
 - **G2:** scaffolding `app-desktop` Electron + TS (electron-vite), `uiohook-napi` funzionante, tray, overlay, SQLite, IPC sicuro.
 - **G3:** audio capture + Edge Function proxy + iniezione clipboard/Ctrl+V end-to-end (loop manuale funzionante).
-- **G4:** scaffolding `app-web` Next.js + Tailwind + Supabase + Vercel preview.
+- **G4:** scaffolding sito Next.js + Tailwind + Supabase + Vercel preview (ora in root, prima `app-web`).
 - **G5:** rifinitura v0: impostazioni minimale, overlay stati, gestione errori, test 20 cicli no leak.
 - **G6:** landing shell, README, PR verso main, riepilogo rischi/decis. aperte.
 
@@ -202,7 +202,7 @@ Obiettivo Giorno 6: **loop core affidabile + scaffolding solido**. Tutto ciò ch
 │   ├── electron.vite.config.ts
 │   ├── package.json
 │   └── .env.example
-├── app-web/                     # Next.js App Router + Tailwind + Supabase (sito)
+├── app/                         # Next.js App Router (sito — prima in app-web/app)
 │   ├── app/
 │   ├── components/
 │   ├── lib/supabase/
@@ -217,7 +217,7 @@ Obiettivo Giorno 6: **loop core affidabile + scaffolding solido**. Tutto ciò ch
 
 1. **Unico branch/PR per Giorno 1** (`feature/voiceflow-day1-…` → `main`) come richiesto dal brief, senza coordinare due repo.
 2. **Condivisione doc/decisions** (`docs/`, `README.md` root) e CI futura unica.
-3. **Deploy separati comunque:** `app-web` deploya su Vercel con root directory `app-web`; `app-desktop` non deploya su Vercel (build locale con `electron-builder`).
+3. **Deploy separati comunque:** il sito deploya su Vercel con Root Directory vuota (root); `app-desktop` (ora repo separato `Vertex/Desktop/voiceflow`) non deploya su Vercel (build locale con `electron-builder`).
 4. **Alternativa repo separati:** valida solo se i team dovessero divergere o se si vuole isolamento permessi — non è il caso per MVP solo-founder di 6 giorni. Se preferisci due repo, lo si può fare in Fase 3 su tua indicazione esplicita — per ora si procede monorepo.
 
 ---
@@ -258,7 +258,7 @@ Obiettivo Giorno 6: **loop core affidabile + scaffolding solido**. Tutto ciò ch
 - [ ] `docs/scope.md` approvato (Checkpoint 1).
 - [ ] `app-desktop` si avvia in dev (`npm run dev` in `app-desktop`), tray visibile, overlay appare su hotkey, hook non blocca input.
 - [ ] Loop end-to-end funzionante: `Ctrl+Space` (hold) → parla → release → trascrizione via Edge Function → incolla in app attiva (testato in almeno 3 app diverse).
-- [ ] `app-web` si avvia (`npm run dev` in `app-web`), deploy preview Vercel visibile, landing shell con CTA placeholder.
+- [ ] il sito si avvia (`npm run dev` dalla root), deploy preview Vercel visibile, landing shell con CTA placeholder.
 - [ ] 20 cicli registrazione senza processi orfani / leak.
 - [ ] PR `feature/voiceflow-day1-…` → `main` aperta, non mergiata, con README e `.gitignore` verificati.
 
@@ -272,7 +272,7 @@ Per procedere alla Fase 2 (scaffolding `app-desktop`), conferma:
 
 1. **Nome:** confermi `VoiceFlow` come nome di lavoro fino a Giorno 6, o scegli `Detta` / `WhisperWin`?
 2. **Feature set MVP:** approvi la tabella §3.1 come scope spietato, o vuoi spostare qualcosa tra IN/FUORI?
-3. **Monorepo:** approvi struttura `/app-desktop` + `/app-web` in unico repo, o preferisci due repo separati?
+3. **Monorepo:** approvi struttura `/app-desktop` + sito web in unico repo, o preferisci due repo separati? (scelta finale: due repo separati — sito in `Vertex/Web/voiceflow`, desktop in `Vertex/Desktop/voiceflow`)
 4. **Stack:** confermi `uiohook-napi` + `@nut-tree/nut-js` + `better-sqlite3` (con fallback dichiarati), o hai preferenze diverse?
 
 Appena confermi, procedo con Fase 2 (scaffolding Electron) e poi Fase 3 (scaffolding Next.js) con checkpoint dedicati.
