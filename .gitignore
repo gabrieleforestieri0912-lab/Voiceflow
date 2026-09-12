@@ -32,9 +32,3 @@ Thumbs.db
 # TypeScript / Next
 *.tsbuildinfo
 next-env.d.ts
-
-# Electron (desktop) build outputs
-app-desktop/dist/
-app-desktop/dist-electron/
-app-desktop/release/
-app-desktop/*.tsbuildinfo
