@@ -8,6 +8,8 @@ import { IntegrationsSection } from "@/components/landing/IntegrationsSection";
 import { AgenticCodingDemo } from "@/components/landing/AgenticCodingDemo";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { Pricing } from "@/components/landing/Pricing";
+import { FAQ } from "@/components/landing/FAQ";
+import { Footer } from "@/components/landing/Footer";
 
 export default function Page() {
   return (
@@ -23,10 +25,9 @@ export default function Page() {
         <AgenticCodingDemo />
         <Testimonials />
         <Pricing />
+        <FAQ />
       </main>
-      <footer className="border-t border-border py-8 text-center text-xs text-muted-foreground">
-        VoiceFlow · StackUp · Solo Windows · Fase 8 — Pricing
-      </footer>
+      <Footer />
     </div>
   );
 }
