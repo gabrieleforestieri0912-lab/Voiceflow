@@ -7,6 +7,7 @@ import { ModesShowcase } from "@/components/landing/ModesShowcase";
 import { IntegrationsSection } from "@/components/landing/IntegrationsSection";
 import { AgenticCodingDemo } from "@/components/landing/AgenticCodingDemo";
 import { Testimonials } from "@/components/landing/Testimonials";
+import { Pricing } from "@/components/landing/Pricing";
 
 export default function Page() {
   return (
@@ -21,9 +22,10 @@ export default function Page() {
         <IntegrationsSection />
         <AgenticCodingDemo />
         <Testimonials />
+        <Pricing />
       </main>
       <footer className="border-t border-border py-8 text-center text-xs text-muted-foreground">
-        VoiceFlow · StackUp · Solo Windows · Fase 7 — Testimonial
+        VoiceFlow · StackUp · Solo Windows · Fase 8 — Pricing
       </footer>
     </div>
   );
