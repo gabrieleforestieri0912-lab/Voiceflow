@@ -33,6 +33,28 @@ export const siteContent = {
       { value: "tecnico", label: "Tecnico" },
       { value: "chat", label: "Chat" },
     ],
+    examples: {
+      formale: {
+        input: "ehm ciao volevo mandare email al cliente per dire che abbiamo finito la prima parte e che domani facciamo deploy alle dieci",
+        output: "Buongiorno,\nabbiamo completato la prima fase del progetto. Domani procederemo con il deploy alle 10:00. Resto a disposizione per qualsiasi necessità.\nCordiali saluti",
+        ctx: "Email di lavoro",
+      },
+      casual: {
+        input: "ohi senti ho visto la tua bozza direi che va bene però cambierei un paio di cose al volo",
+        output: "Ehi! Ho visto la tua bozza — direi che va bene così, cambierei solo un paio di dettagli al volo e poi siamo a posto 👌",
+        ctx: "Messaggio Slack a un collega",
+      },
+      tecnico: {
+        input: "fai commit con messaggio fix del bug sul refresh token e aggiungi nota che chiude la issue quarantadue",
+        output: "fix(auth): gestito edge case su refresh token\n\n- Evitato race su tab multipli\n- Aggiunto retry 401 con backoff\nCloses #42",
+        ctx: "Commit message tecnico",
+      },
+      chat: {
+        input: "ci vediamo domani sera per pizza? porto io la birra e poi guardiamo la partita",
+        output: "Ci vediamo domani sera per pizza? Porto io le birre e dopo ci guardiamo la partita 🍕🍻",
+        ctx: "Chat informale con un amico",
+      },
+    },
   },
   features: [
     { title: "Funziona offline", desc: "Trascrizione locale, nessuna connessione richiesta per la base." },
