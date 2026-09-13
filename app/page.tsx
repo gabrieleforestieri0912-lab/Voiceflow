@@ -6,6 +6,7 @@ import { FeaturesGrid } from "@/components/landing/FeaturesGrid";
 import { ModesShowcase } from "@/components/landing/ModesShowcase";
 import { IntegrationsSection } from "@/components/landing/IntegrationsSection";
 import { AgenticCodingDemo } from "@/components/landing/AgenticCodingDemo";
+import { Testimonials } from "@/components/landing/Testimonials";
 
 export default function Page() {
   return (
@@ -19,9 +20,10 @@ export default function Page() {
         <ModesShowcase />
         <IntegrationsSection />
         <AgenticCodingDemo />
+        <Testimonials />
       </main>
       <footer className="border-t border-border py-8 text-center text-xs text-muted-foreground">
-        VoiceFlow · StackUp · Solo Windows · Fase 6 — Integrazioni
+        VoiceFlow · StackUp · Solo Windows · Fase 7 — Testimonial
       </footer>
     </div>
   );

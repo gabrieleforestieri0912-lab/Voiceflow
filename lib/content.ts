@@ -81,6 +81,14 @@ export const siteContent = {
       { name: "Enterprise", price: "Custom", features: ["SSO", "On-premise", "SLA"] },
     ],
   },
+  testimonials: [
+    { name: "Marco R.", role: "Full-stack developer", quote: "Detto in Slack e incollato in Cursor senza mai toccare la tastiera. Risparmio 30 minuti al giorno." },
+    { name: "Giulia B.", role: "Product manager", quote: "Le email formali le detto al volo, Voiceflow le rende impeccabili. Nativo Windows, finalmente." },
+    { name: "Luca S.", role: "Freelance designer", quote: "Vocabolario con i nomi clienti — non correggo più nulla a mano." },
+    { name: "Sara M.", role: "Tech writer", quote: "Modalità tecnico per i commit, chat per Slack. Un toggle e cambia tono." },
+    { name: "Davide P.", role: "Startup founder", quote: "Assistente riunioni + dettatura ovunque. Setup in 2 minuti." },
+    { name: "Elena F.", role: "Data analyst", quote: "100 lingue e incolla dove scrivo già. Zero friction su Windows." },
+  ],
   faq: [
     { q: "Serve connessione?", a: "La base funziona offline, le funzioni avanzate usano il proxy cloud senza esporre chiavi." },
     { q: "Su quali Windows?", a: "Windows 10/11 64-bit, microfono e shortcut Ctrl+Spazio configurabile." },
