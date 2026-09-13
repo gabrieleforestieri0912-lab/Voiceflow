@@ -2,6 +2,7 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Hero } from "@/components/landing/Hero";
 import { TrustBar } from "@/components/landing/TrustBar";
 import { AdaptabilitySection } from "@/components/landing/AdaptabilitySection";
+import { FeaturesGrid } from "@/components/landing/FeaturesGrid";
 
 export default function Page() {
   return (
@@ -11,12 +12,10 @@ export default function Page() {
         <Hero />
         <TrustBar />
         <AdaptabilitySection />
-        <section id="features" className="mx-auto max-w-6xl px-6 py-12">
-          <p className="text-sm text-muted-foreground">Fase 4+ in arrivo — Features…</p>
-        </section>
+        <FeaturesGrid />
       </main>
       <footer className="border-t border-border py-8 text-center text-xs text-muted-foreground">
-        VoiceFlow · StackUp · Solo Windows · Fase 3 — Adattabilità tono
+        VoiceFlow · StackUp · Solo Windows · Fase 4 — Features
       </footer>
     </div>
   );
