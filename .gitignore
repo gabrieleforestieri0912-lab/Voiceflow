@@ -16,7 +16,6 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
-app-web/.env.local
 
 # OS
 .DS_Store

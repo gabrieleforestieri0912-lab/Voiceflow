@@ -1,0 +1,19 @@
+# Config Supabase per VoiceFlow — Edge Functions proxy AI (nessuna chiave nel bundle).
+# Il progetto Supabase dedicato va creato a parte e collegato con `supabase link`.
+# Deploy: `supabase functions deploy transcribe transcribe-audio apply-mode`
+# Secrets: `supabase secrets set OPENAI_API_KEY=sk-...` (+ opzionale FREE_MONTHLY_WORD_LIMIT)
+
+project_id = "voiceflow"
+
+[functions.transcribe]
+# Legacy: mantenuta per compatibilità con client Giorno 1/2. Nuovo nome: transcribe-audio.
+verify_jwt = true
+
+[functions.transcribe-audio]
+# Endpoint primario Giorno 3 — proxy Whisper con quota e vocabolario custom.
+# Autenticato via Supabase JWT (Authorization: Bearer <jwt>) o x-license-key.
+verify_jwt = false
+
+[functions.apply-mode]
+# Proxy LLM per Modes. Fuori scope MVP (stub 501 fino a Fase 2).
+verify_jwt = false

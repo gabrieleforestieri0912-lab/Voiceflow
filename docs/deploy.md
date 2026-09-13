@@ -8,13 +8,15 @@ Note operative sul progetto web. L'app desktop è in un repo separato.
 |-------|--------|
 | Progetto | `voiceflow` |
 | Scope | `Vertex` (`vertex-9`) — il team `StackUp` non esiste: `stackup` è un *progetto* dentro Vertex |
-| Root Directory | **`app-web`** (importante: senza questa le build da GitHub fallirebbero) |
+| Root Directory | **(root)** — il progetto Next è nella root del repo |
 | Framework | Next.js |
 | Production branch | `main` |
 
 - Push su `main` → deploy di produzione.
 - Pull request → preview automatica.
-- Deploy manuale: `cd app-web && vercel --prod`
+- Deploy manuale: `vercel --prod` (dalla root)
+
+Aggiornamento: la Root Directory su Vercel va cambiata da `app-web` a **vuota/root** dopo questo spostamento (Settings → General → Root Directory → Edit → svuota / lascia `.`).
 
 URL:
 
@@ -48,7 +50,6 @@ vive nel repo dell'app desktop, non qui.
 ## Verifica locale
 
 ```bash
-cd app-web
 npm install
 cp .env.example .env.local
 npx tsc --noEmit
