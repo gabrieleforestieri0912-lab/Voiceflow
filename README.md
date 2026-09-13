@@ -15,11 +15,23 @@ Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy s
 
 ```
 .
-├── app/            # Next.js App Router: `/` (landing) e `/download`
-├── components/     # componenti UI (base shadcn/ui)
-├── lib/            # client Supabase (browser/server) + utils
-└── docs/           # note di deploy e ambiente
+├── app/                 # Next.js App Router: `/` (landing) e `/download`
+├── components/
+│   ├── ui/              # shadcn/ui (button, card, tabs, sheet, dialog…)
+│   └── landing/         # Navbar, Hero, TrustBar… (uno per sezione, Fase 1-9)
+├── lib/
+│   ├── animations.ts    # varianti Framer Motion (solo transform/opacity)
+│   ├── content.ts       # copy centralizzata
+│   ├── supabase/        # client browser/server
+│   └── utils.ts
+└── docs/
+    ├── scope.md         # scope Giorno 1 (storico)
+    ├── deploy.md
+    ├── landing/         # fase 0-9 (phase-gated)
+    └── archive/         # day summaries precedenti
 ```
+
+> Separazione: questo repo è **solo Web**. L'app desktop è `Vertex/Desktop/voiceflow` (Electron, repo Git separato). Nessuna cartella condivisa.
 
 ## Requisiti
 
@@ -71,9 +83,9 @@ Preview.
 
 ## Stato
 
-- Landing shell dark (hero, "come funziona", CTA "Scarica per Windows") → `/`
+- Design system dark teal/indigo (`#0B0D10`, `#5EEAD4`, `#818CF8`) + Geist Sans/Mono, `lib/animations.ts`
+- Fase 0 completa (`landing/setup-design-system-*`), Fase 1 in corso (`landing/hero-demo-*`)
 - Pagina `/download` (requisiti + privacy + istruzioni dev)
-- shadcn/ui base: `components.json`, `lib/utils.ts` (`cn`), `components/ui/button.tsx`
-- Client Supabase App Router: `lib/supabase/client.ts` (+ `server.ts` per i cookie)
+- shadcn/ui + Framer Motion (solo GPU props), newsletter futura `newsletter_signups` (RLS insert-only)
 
-Ancora da fare: checkout/licenza (Stripe), area account, design finale.
+Vedi `docs/README.md` e `docs/landing/fase0-setup.md` per dettaglio fasi.
