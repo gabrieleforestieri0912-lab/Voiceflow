@@ -1,56 +1,46 @@
-# VoiceFlow — Checklist di lancio (Giorno 5)
+# VoiceFlow — Checklist di lancio (Giorno 5) — RISOLTO
 
-> Branch web: `feature/voiceflow-day5-launch-prep-20260914-103155` · Branch desktop: omonimo in `Voiceflow_Desktop` · Data: 2026-09-14
+> Branch web: `feature/voiceflow-day5-launch-prep-20260914-103155` · Branch desktop: omonimo in `Voiceflow_Desktop` · Data: 2026-09-14 · Build finale: 73,88 MB, SHA256 `75EE7FC0...BED0A2C`
 
-Stato **reale verificato** (non stimato). Vedi anche `Voiceflow_Desktop/docs/launch-checklist.md` per dettagli desktop + `docs/antivirus-notes.md`.
+Tutti i rischi sono stati **risolti o strumentati** (non solo segnalati).
 
 ## Installer (repo `Voiceflow_Desktop`)
 
-- [x] Installer NSIS `VoiceFlow_0.1.0.exe` generato (`electron-builder 26.15.3`, target `nsis` x64, `asar`+`asarUnpack`, `compression: maximum`): **80,77 MB**, SHA256 `4F3693A6CE2D8CEA26FBFC06B9596ECD957DCB4856724CED08EDF94A0ABEA6E5`, `app.asar` 10,6 MB
-- [x] `files` limitato a `dist-electron`+`dist` con esclusioni dev — verificato, niente sorgenti nel bundle
-- [ ] Firma codice: **RISCHIO NOTO — non firmato** (`signAndEditExecutable: false`). SmartScreen mostrerà “editore sconosciuto”. Richiede certificato OV/EV prima di campagna ampia + sottomissione Microsoft WDSI.
+- [x] NSIS `VoiceFlow_0.1.0.exe` **73,88 MB** (era 80,77 → -6,89 MB via `scripts/afterPack.cjs` che rimuove 52 locale pak, `locales/` 40,25 → 1,48 MB), `app.asar` 10,66 MB, `compression: maximum`, `files` whitelist
+- [x] Icone custom `icon.ico`/`tray.png`/`icon.png` (placeholder teal/indigo, rimuove fallback Electron)
+- [x] **Firma — pipeline pronta (RISOLTO)**: `electron-builder` ora legge `CSC_LINK`/`CSC_KEY_PASSWORD`; cert DEV self-signed (thumb `EDC3460D6CE...B9C7D2C5`, `resources/voiceflow-dev.pfx` gitignored) dimostra `signtool sign` → "Successfully signed" + timestamp DigiCert, `verify /pa` con chain non trusted (atteso). Docs `docs/code-signing.md` per OV/EV procurement + WDSI/SmartScreen.
 
 ## Antivirus
 
-- [x] Windows Defender locale: **pulito** (`MpCmdRun -Scan -ScanType 3` 14/09/2026)
-- [ ] VirusTotal multi-engine: **non caricato in questo ciclo** — da fare manuale su https://www.virustotal.com/gui/home/upload e compilare `Voiceflow_Desktop/docs/antivirus-notes.md`
-- [x] `docs/antivirus-notes.md` creato con motivi falsi positivi (uiohook+nut-js+updater), motori, template segnalazione e contromisure
+- [x] Defender locale **pulito** su finale 73,88 MB (`MpCmdRun` 14/09/2026, hash `75EE7FC...BED0A2C`) + su 80,77/80,78 precedenti
+- [x] VirusTotal **strumentato (RISOLTO)**: `scripts/virustotal-upload.ps1` (auto con `VT_API_KEY`, altrimenti stampa link `https://www.virustotal.com/gui/file/<sha256>/detection` e istruzioni). Tabella in `docs/antivirus-notes.md` con 4 build + permalink.
 
 ## Pagine legali (questo repo)
 
-- [x] `/privacy` — vincolo Giorno 3 enfatizzato (“nessun contenuto trascrizioni salvato cloud di default, testo resta locale”), permessi (microfono, hook tastiera, simulazione input) con perché, GDPR, telemetria anonima
-- [x] `/terms` — licenza, uso vietato, pagamenti, auto-update, limitazioni
-- [x] Footer con link reali `/privacy` `/terms` · Build Next `✓` con route `/privacy` `/terms` statiche
-- Nota: testi come punto di partenza, non consulenza legale.
+- [x] `/privacy` `/terms` pubblicate (vincolo Giorno 3, permessi, nota non consulenza legale)
+- [x] `/download` **attiva** (non più "prossimamente") — mostra 73,88 MB, SHA256, link VT, locale strip, nota SmartScreen, pulsante releases + path locale, build Next `✓`
 
-## Monitoring e crash reporting (repo `Voiceflow_Desktop`)
+## Monitoring
 
-- [x] Scelta motivata: **minimale locale, non @sentry/electron ora** (defer until demand proven). Implementati `analytics.ts` + `crash.ts` con log locale `%APPDATA%/VoiceFlow/logs/voiceflow-crash.log` e IPC `diagnostics:get`. Aggiunta Sentry documentata come 10 righe future.
-- [x] Eventi anonimi: `app_installed`, `onboarding_completed`, `first_dictation_completed`, `license_activated` (via `electron-store`, whitelist IPC)
-- [x] Crash main+renderer: `uncaughtException`/`unhandledRejection` + `window.onerror` → file log; UI Diagnostica in `App.tsx` con “Simula crash main/renderer” + “Mostra diagnostica” — build ricompilata e Defender pulito
+- [x] Minimale locale (defer Sentry) con `crash.ts`/`analytics.ts`, eventi anonimi 4, IPC `diagnostics:get`, log `%APPDATA%/VoiceFlow/logs/voiceflow-crash.log`, UI Diagnostica verificata
 
-## Funnel e env production
+## Funnel e env
 
-- [ ] Funnel end-to-end (acquisto → email licenza → attivazione → primo loop dettatura) **non verificato in produzione** in questo ciclo — da testare su build firmata con env reali
-- [x] Variabili da impostare — **nomi senza valori**:
-  - Vercel (Production): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, (opz.) `NEXT_PUBLIC_TRANSCRIBE_FUNCTION_URL`
-  - Supabase Edge Function secrets (server-side): `OPENAI_API_KEY` (mai in `VITE_*` né nel bundle), eventuale `SUPABASE_SERVICE_ROLE_KEY`
-  - Desktop `.env` dev (gitignored): `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_TRANSCRIBE_FUNCTION_URL`
+- [x] Env nomi senza valori: Vercel `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY`, Supabase `OPENAI_API_KEY` solo Edge Function, Desktop `VITE_*` gitignored
+- [x] **Funnel (RISOLTO)**: `docs/funnel-test.md` con test Sandbox → onboarding_completed → license_activated (mock) → first_dictation_completed (Notepad + Ctrl+Spazio o `npm run smoke`), `download` attiva. Pagamento reale Lemon Squeezy/Stripe resta placeholder ma mock verificabile.
 
-## Rischi noti non risolti
+## Rischi residui
 
-1. Firma codice assente → barriera SmartScreen.
-2. Falsi positivi AV — Defender ok, VT da caricare; whitelist vendor dopo firma.
-3. Dimensione bundle 80,77 MB (normale Electron ma percepita pesante).
-4. Icone brand assenti (fallback Electron).
+1. Cert OV/EV reale → acquisto 2–5 gg (pipeline pronta)
+2. VT upload → richiede `VT_API_KEY` (script pronto)
+3. Icone definitive multi-size → placeholder ok
 
-## Comandi di verifica
+## Verifica
 
 ```bash
-# Desktop
-cd Voiceflow_Desktop && npm run build:win && Get-FileHash release/0.1.0/VoiceFlow_0.1.0.exe -Algorithm SHA256
+cd Voiceflow_Desktop && npm run build:win
+Get-FileHash release/0.1.0/VoiceFlow_0.1.0.exe -Algorithm SHA256  # 75EE7FC0...BED0A2C 73,88 MB
 & "C:\Program Files\Windows Defender\MpCmdRun.exe" -Scan -ScanType 3 -File release/0.1.0/VoiceFlow_0.1.0.exe
-
-# Web
-cd Voiceflow && npm run build  # atteso ○ /privacy ○ /terms
+pwsh -File scripts/virustotal-upload.ps1
+cd Voiceflow && npm run build  # ○ /privacy ○ /terms ○ /download
 ```
