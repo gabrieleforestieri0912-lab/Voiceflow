@@ -12,7 +12,7 @@ export async function createClient() {
 
   if (!url || !anonKey) {
     throw new Error(
-      "Supabase non configurato: imposta NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local (vedi .env.example).",
+      "Supabase non configurato: imposta NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.",
     );
   }
 
