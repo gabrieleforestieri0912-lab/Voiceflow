@@ -51,7 +51,7 @@ vive nel repo dell'app desktop, non qui.
 
 ```bash
 npm install
-cp .env.example .env.local
+# configura .env con le variabili necessarie
 npx tsc --noEmit
 npm run build
 npm run dev

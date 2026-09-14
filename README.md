@@ -25,10 +25,8 @@ Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy s
 │   ├── supabase/        # client browser/server
 │   └── utils.ts
 └── docs/
-    ├── scope.md         # scope Giorno 1 (storico)
-    ├── deploy.md
-    ├── landing/         # fase 0-9 (phase-gated)
-    └── archive/         # day summaries precedenti
+     ├── README.md        # overview progetto
+     └── deploy.md        # note deploy Vercel
 ```
 
 > Separazione: questo repo è **solo Web**. L'app desktop è `Vertex/Desktop/voiceflow` (Electron, repo Git separato). Nessuna cartella condivisa.
@@ -42,7 +40,7 @@ Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy s
 
 ```bash
 npm install
-cp .env.example .env.local   # riempi i placeholder
+# crea .env e riempi i placeholder (vedi .env)
 npm run dev                  # http://localhost:3000
 ```
 
@@ -56,7 +54,7 @@ npx tsc --noEmit # typecheck
 
 ## Variabili d'ambiente
 
-In `.env.local` (gitignored). Vedi `.env.example`.
+In `.env` (gitignored).
 
 | Variabile | Dove vive | Note |
 |-----------|-----------|------|
@@ -84,8 +82,6 @@ Preview.
 ## Stato
 
 - Design system dark teal/indigo (`#0B0D10`, `#5EEAD4`, `#818CF8`) + Geist Sans/Mono, `lib/animations.ts`
-- Fase 0 completa (`landing/setup-design-system-*`), Fase 1 in corso (`landing/hero-demo-*`)
+- Design system dark teal/indigo + Geist Sans/Mono
 - Pagina `/download` (requisiti + privacy + istruzioni dev)
 - shadcn/ui + Framer Motion (solo GPU props), newsletter futura `newsletter_signups` (RLS insert-only)
-
-Vedi `docs/README.md` e `docs/landing/fase0-setup.md` per dettaglio fasi.

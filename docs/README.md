@@ -1,31 +1,56 @@
-# VoiceFlow — Docs
+# VoiceFlow — Documentazione
 
-Struttura documentazione dopo separazione **Web / Desktop**.
+## Cos'è VoiceFlow
+
+**VoiceFlow** è un'app di dettatura vocale push-to-talk **solo per Windows**. L'utente tiene premuta una hotkey globale, parla, rilascia: il testo trascritto viene incollato automaticamente nell'app attiva (Slack, Gmail, Word, Cursor, ecc.).
+
+Il progetto è diviso in due repo separati:
+
+- **Sito web** — questo repo (`Vertex/Web/voiceflow`): landing, pagina download e futura gestione licenze. Stack **Next.js App Router + TypeScript + Tailwind CSS + Supabase**, deploy su **Vercel**.
+- **App desktop** — repo separato (`Vertex/Desktop/voiceflow`): prodotto vero e proprio in **Electron + TypeScript** (hook tastiera globale, cattura microfono, trascrizione via Whisper, iniezione `Ctrl+V`).
+
+## Come funziona (flusso core)
 
 ```
-Vertex/
-├── Web/voiceflow/          # Sito Next.js (questo repo)
-│   ├── app/                # App Router
-│   ├── components/landing/ # Sezioni landing (Fase 1-9)
-│   ├── lib/animations.ts / content.ts
-│   └── docs/               # ← sei qui
-│       ├── scope.md        # Scope condiviso Giorno 1 (storico, resta per riferimento)
-│       ├── deploy.md       # Deploy Vercel (Web)
-│       ├── landing/        # Fase 0-9 landing (phase-gated)
-│       └── archive/        # Day 1-3 summaries desktop/web precedenti
-└── Desktop/voiceflow/      # App Electron (repo separato)
-    ├── src/                # main / renderer / services
-    ├── supabase/functions/ # transcribe / transcribe-audio / apply-mode
-    └── docs/               # scope.md + day summaries desktop
+[hotkey premuta] → [registrazione microfono] → [Edge Function Supabase → Whisper API] → [testo] → [clipboard + Ctrl+V nell'app attiva]
 ```
 
-## Regole
+- Nessuna chiave API nel bundle: la trascrizione è proxata via Supabase Edge Function.
+- Audio non salvato di default, privacy dichiarata in landing.
 
-- **Web** e **Desktop** sono repo Git separati con remote diversi (`voiceflow` Web su GitHub, Desktop senza remote locale). Nessuna cartella condivisa, nessuna dipendenza incrociata.
-- Supabase è condiviso come progetto cloud ma le migration vivono solo dove servono: oggi nessuna tabella DB necessaria (opzione 2 — proxy puro Whisper), futura `newsletter_signups` vivrà solo in Web.
-- Landing segue branch `landing/<fase>-<timestamp>` → PR → main, STOP tra fasi.
+## Stack sito web
 
-## Landing — stato fasi
+- **Next.js 16** (App Router), **React 19**, **Tailwind CSS 4**, **shadcn/ui**, **Framer Motion**
+- **Supabase** (auth futura, tabella `newsletter_signups`)
+- **Stripe** (placeholder, checkout fuori scope MVP)
+- Deploy **Vercel** — progetto `voiceflow`, team `Vertex` (`vertex-9`), Root Directory `root`
 
-- Fase 0 — Setup design system: `landing/fase0-setup.md` (palette scura teal/indigo, Geist, tokens, shadcn, framer-motion)
-- Fase 1 — Navbar + Hero: in corso `landing/hero-demo-*`
+Live: https://voiceflow-flax.vercel.app (`/` e `/download`)
+
+## Struttura repo
+
+```
+.
+├── app/                 # Next.js App Router
+├── components/
+│   ├── ui/              # shadcn/ui
+│   └── landing/         # sezioni landing (Navbar, Hero, ecc.)
+├── lib/
+│   ├── supabase/        # client browser/server
+│   ├── animations.ts
+│   └── content.ts       # copy centralizzata
+├── supabase/            # config e funzioni
+└── docs/                # questa documentazione
+```
+
+## Avvio locale
+
+```bash
+npm install
+# configura .env (vedi .env)
+npm run dev              # http://localhost:3000
+npm run build
+npx tsc --noEmit
+```
+
+Variabili in `.env` (gitignored): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (solo server), `STRIPE_*`, `NEXT_PUBLIC_SITE_URL`.

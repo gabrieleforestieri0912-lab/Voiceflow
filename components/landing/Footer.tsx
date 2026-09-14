@@ -46,16 +46,37 @@ export function Footer() {
             <p className="mt-2 text-xs leading-5 text-muted-foreground">Dettatura nativa per Windows. Parli, Voiceflow scrive.</p>
           </div>
           {[
-            { title: "Prodotto", links: ["Funzionalità", "Prezzi", "Download"] },
-            { title: "Risorse", links: ["Docs", "Changelog", "Supporto"] },
-            { title: "Legale", links: ["Privacy", "Termini", "Contatti"] },
+            {
+              title: "Prodotto",
+              links: [
+                { label: "Funzionalità", href: "/#features" },
+                { label: "Prezzi", href: "/#pricing" },
+                { label: "Download", href: "/download" },
+              ],
+            },
+            {
+              title: "Risorse",
+              links: [
+                { label: "Docs", href: "#" },
+                { label: "Changelog", href: "#" },
+                { label: "Supporto", href: "mailto:support@voiceflow.app" },
+              ],
+            },
+            {
+              title: "Legale",
+              links: [
+                { label: "Privacy", href: "/privacy" },
+                { label: "Termini", href: "/terms" },
+                { label: "Contatti", href: "mailto:support@voiceflow.app" },
+              ],
+            },
           ].map((col) => (
             <div key={col.title}>
               <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{col.title}</p>
               <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
                 {col.links.map((l) => (
-                  <li key={l} className="hover:text-foreground">
-                    <a href="#">{l}</a>
+                  <li key={l.label} className="hover:text-foreground">
+                    <a href={l.href}>{l.label}</a>
                   </li>
                 ))}
               </ul>
