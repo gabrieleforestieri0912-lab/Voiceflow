@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Play } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Primitives";
@@ -15,43 +15,14 @@ const DEMO_TEXT: Record<DemoApp, string> = {
   Notes: "idea: voice-first shopping list with weekly templates and shared family mode",
 };
 
-const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-// Sfondo griglia lettere con effetto "ascolto"
-function LetterGrid() {
-  const reduce = useReducedMotion();
-  const [lit, setLit] = useState<Set<number>>(new Set());
-  const cells = useMemo(() => {
-    const arr: string[] = [];
-    for (let i = 0; i < 480; i++) arr.push(LETTERS[Math.floor(Math.random() * LETTERS.length)]);
-    return arr;
-  }, []);
-
-  useEffect(() => {
-    if (reduce) return;
-    const id = window.setInterval(() => {
-      const next = new Set<number>();
-      const count = 8 + Math.floor(Math.random() * 10);
-      for (let i = 0; i < count; i++) next.add(Math.floor(Math.random() * 480));
-      setLit(next);
-      window.setTimeout(() => setLit(new Set()), 800);
-    }, 900);
-    return () => window.clearInterval(id);
-  }, [reduce]);
-
+// Sfondo cielo all'alba animato: gradiente azzurro → orizzonte caldo + nubi alla deriva
+function SkyDawn() {
   return (
-    <div aria-hidden className="mask-radial pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="grid h-full w-full grid-cols-[repeat(24,minmax(0,1fr))] gap-1 p-4 font-mono text-[14px] leading-none">
-        {cells.map((ch, i) => (
-          <span
-            key={i}
-            className="text-center transition-colors duration-700"
-            style={{ opacity: lit.has(i) ? 0.9 : 0.06, color: lit.has(i) ? "#FFD60A" : "#fff" } as React.CSSProperties}
-          >
-            {ch}
-          </span>
-        ))}
-      </div>
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="sky-base absolute inset-0" />
+      <div className="sky-blob sky-blob-a" />
+      <div className="sky-blob sky-blob-b" />
+      <div className="sky-blob sky-blob-c" />
     </div>
   );
 }
@@ -64,7 +35,7 @@ function Waveform({ active }: { active: boolean }) {
       {Array.from({ length: bars }).map((_, i) => (
         <motion.span
           key={i}
-          className="w-[3px] rounded-full bg-accent"
+          className="w-[3px] rounded-full bg-azure"
           animate={
             active && !reduce
               ? { height: [6, 14 + Math.abs(Math.sin(i * 0.9)) * 22, 6] }
@@ -138,7 +109,7 @@ export function Hero() {
 
   return (
     <section id="top" className="relative overflow-hidden pb-10 pt-16 sm:pt-24">
-      <LetterGrid />
+      <SkyDawn />
       <div className="relative mx-auto max-w-6xl px-5 text-center sm:px-8">
         <motion.h1 className="text-balance" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}>
           <span className="block">
@@ -217,7 +188,7 @@ export function Hero() {
                   className={cn("relative rounded-pill px-4 py-1.5 text-sm transition-colors", app === a ? "text-black" : "text-muted hover:text-foreground")}
                 >
                   {app === a && (
-                    <motion.span layoutId="demo-pill" className="absolute inset-0 rounded-pill bg-accent" transition={{ duration: 0.4, ease: [...EASE] }} />
+                    <motion.span layoutId="demo-pill" className="absolute inset-0 rounded-pill bg-azure" transition={{ duration: 0.4, ease: [...EASE] }} />
                   )}
                   <span className="relative">{a}</span>
                 </button>
@@ -230,11 +201,11 @@ export function Hero() {
 
           <button
             onClick={() => runDemo()}
-            className="mt-4 block w-full rounded-[14px] border border-border bg-background p-4 text-left transition-colors hover:border-accent/30"
+            className="mt-4 block w-full rounded-[14px] border border-border bg-background p-4 text-left transition-colors hover:border-azure"
             aria-label="Run dictation demo"
           >
             <div className="mb-2 flex items-center gap-2 text-xs text-dim">
-              <span className={cn("h-2 w-2 rounded-full", phase === "listening" ? "animate-pulse bg-accent" : "bg-dim")} />
+              <span className={cn("h-2 w-2 rounded-full", phase === "listening" ? "animate-pulse bg-azure" : "bg-dim")} />
               {phase === "idle" ? `Ready in ${app} — click to dictate` : phase === "listening" ? "Listening…" : `Pasted in ${app}`}
             </div>
             {phase === "listening" && !textOnly ? (
@@ -242,7 +213,7 @@ export function Hero() {
             ) : (
               <p className="min-h-[48px] font-mono text-[15px] leading-relaxed">
                 {typed || <span className="text-dim">— press the keys and speak —</span>}
-                {phase === "typing" && typed.length < DEMO_TEXT[app].length && <span className="cursor-blink ml-0.5 inline-block h-4 w-[2px] bg-accent align-middle" />}
+                {phase === "typing" && typed.length < DEMO_TEXT[app].length && <span className="cursor-blink ml-0.5 inline-block h-4 w-[2px] bg-azure align-middle" />}
               </p>
             )}
           </button>

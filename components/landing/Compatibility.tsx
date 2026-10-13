@@ -42,10 +42,10 @@ export function Compatibility() {
       </Stagger>
 
       <Reveal delay={0.1}>
-        <ol className="mt-6 grid gap-3 rounded-card border border-accent/25 bg-accentSoft/40 p-5 sm:grid-cols-3 sm:p-6">
+        <ol className="mt-6 grid gap-3 rounded-card border border-leaf/25 bg-leafSoft/40 p-5 sm:grid-cols-3 sm:p-6">
           {COMPAT_STEPS.map((s, i) => (
             <li key={s.title} className="flex gap-3">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-accent text-black">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-leaf text-black">
                 {stepIcons[i]}
               </span>
               <div>

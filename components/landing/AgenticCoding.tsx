@@ -70,7 +70,7 @@ export function AgenticCoding() {
             {points.map((p, i) => (
               <Reveal key={p.title} delay={0.08 + i * 0.06}>
                 <div className="flex gap-3.5">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-accentSoft text-accent">{p.icon}</span>
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-leafSoft text-leaf">{p.icon}</span>
                   <div>
                     <h3 className="font-semibold">{p.title}</h3>
                     <p className="text-[15px] text-muted">{p.text}</p>
@@ -90,9 +90,9 @@ export function AgenticCoding() {
 +----------------------------------+`}
               </pre>
               <p className="mt-3">
-                <span className="mr-2 text-accent">❯</span>
+                <span className="mr-2 text-leaf">❯</span>
                 <span className="text-foreground">{typed}</span>
-                {typed.length < typedLine.length && <span className="cursor-blink ml-1 inline-block h-4 w-[7px] bg-accent align-middle" />}
+                {typed.length < typedLine.length && <span className="cursor-blink ml-1 inline-block h-4 w-[7px] bg-leaf align-middle" />}
               </p>
               <div className="mt-3 space-y-1.5">
                 {steps.slice(0, step >= 1 ? (step >= 2 ? 2 : 1) : 0).map((s) => (

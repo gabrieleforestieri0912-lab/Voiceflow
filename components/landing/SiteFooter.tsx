@@ -40,9 +40,9 @@ export function SiteFooter() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@fast.com"
-                className="w-full rounded-pill border border-border bg-background px-4 py-2.5 text-sm outline-none placeholder:text-dim focus:border-accent/50"
+                className="w-full rounded-pill border border-border bg-background px-4 py-2.5 text-sm outline-none placeholder:text-dim focus:border-ocean"
               />
-              <button className="shrink-0 rounded-pill bg-accent px-4 py-2.5 text-sm font-semibold text-black transition-all hover:-translate-y-[1px] hover:shadow-glow active:scale-[0.98]">
+              <button className="shrink-0 rounded-pill bg-foreground px-4 py-2.5 text-sm font-semibold text-background transition-all hover:-translate-y-[1px] hover:shadow-pop active:scale-[0.98]">
                 {sent ? "✓" : "Join"}
               </button>
             </form>

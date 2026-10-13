@@ -41,9 +41,9 @@ export function Adaptability() {
               role="tab"
               aria-selected={tab === t}
               onClick={() => setTab(t)}
-              className={cn("relative rounded-pill px-4 py-2 text-sm transition-colors sm:px-5", tab === t ? "text-black" : "text-muted hover:text-foreground")}
+              className={cn("relative rounded-pill px-4 py-2 text-sm transition-colors sm:px-5", tab === t ? "text-white" : "text-muted hover:text-foreground")}
             >
-              {tab === t && <motion.span layoutId="tone-pill" className="absolute inset-0 rounded-pill bg-accent" transition={{ duration: 0.4, ease: [...EASE] }} />}
+              {tab === t && <motion.span layoutId="tone-pill" className="absolute inset-0 rounded-pill bg-ocean" transition={{ duration: 0.4, ease: [...EASE] }} />}
               <span className="relative">{t}</span>
             </button>
           ))}
@@ -59,7 +59,7 @@ export function Adaptability() {
           </div>
         </Reveal>
         <div className="flex justify-end">
-          <div className="w-full max-w-[80%] rounded-card rounded-br-md border border-accent/25 bg-accentSoft px-4 py-3">
+          <div className="w-full max-w-[80%] rounded-card rounded-br-md border border-ocean/25 bg-oceanSoft px-4 py-3">
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab}

@@ -50,7 +50,7 @@ export function Testimonials() {
                     <circle cx="12" cy="22" r="3" fill="var(--surface)" />
                   </svg>
                   <div className="flex items-center gap-3">
-                    <span className="grid h-10 w-10 place-items-center rounded-full bg-accentSoft text-sm font-bold text-accent">{c.initials}</span>
+                    <span className="grid h-10 w-10 place-items-center rounded-full bg-emberSoft text-sm font-bold text-ember">{c.initials}</span>
                     <div>
                       <figcaption className="text-sm font-semibold">{c.name}</figcaption>
                       <p className="text-xs text-dim">{c.role}</p>

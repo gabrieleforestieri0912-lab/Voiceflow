@@ -41,9 +41,9 @@ export function Mobile() {
           >
             <div className="rounded-[20px] bg-surface p-4">
               <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-border" />
-              <div className="grid h-10 w-10 place-items-center rounded-full bg-accent text-black">🎙</div>
+              <div className="grid h-10 w-10 place-items-center rounded-full bg-ocean text-white">🎙</div>
               <p className="mt-3 font-mono text-xs text-muted">“send the recap…”</p>
-              <div className="mt-3 h-2 rounded-full bg-accent/70" style={{ width: "80%" }} />
+              <div className="mt-3 h-2 rounded-full bg-ocean" style={{ width: "80%" }} />
               <div className="mt-2 h-2 rounded-full bg-border" style={{ width: "55%" }} />
             </div>
           </motion.div>

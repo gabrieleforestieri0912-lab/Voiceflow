@@ -92,8 +92,8 @@ export function LocalModels() {
 
       <Reveal delay={0.1}>
         <div className="card-shadow mx-auto mt-10 max-w-3xl rounded-card border border-border bg-surface p-4 sm:p-6">
-          <div className="flex flex-wrap items-center gap-3 rounded-[14px] border border-accent/25 bg-accentSoft px-4 py-3">
-            <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-accent text-black">
+          <div className="flex flex-wrap items-center gap-3 rounded-[14px] border border-ocean/25 bg-oceanSoft px-4 py-3">
+            <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-ocean text-white">
               <Cpu size={17} />
             </span>
             <div className="text-sm">
@@ -117,7 +117,7 @@ export function LocalModels() {
                   key={m.id}
                   className={cn(
                     "rounded-[14px] border p-4 transition-colors",
-                    isActive ? "border-accent/50 bg-accentSoft/40" : "border-border bg-background"
+                    isActive ? "border-ocean/50 bg-oceanSoft/40" : "border-border bg-background"
                   )}
                 >
                   <div className="flex flex-wrap items-center gap-3">
@@ -129,7 +129,7 @@ export function LocalModels() {
                       title={isDown ? `Usa ${m.name} per la trascrizione` : `Scarica ${m.name} per usarlo`}
                       className={cn(
                         "grid h-5 w-5 place-items-center rounded-full border-2 transition-colors",
-                        isActive ? "border-accent bg-accent text-black" : "border-dim",
+                        isActive ? "border-ocean bg-ocean text-white" : "border-dim",
                         !isDown && "cursor-not-allowed opacity-40"
                       )}
                     >
@@ -139,7 +139,7 @@ export function LocalModels() {
                       <p className="flex flex-wrap items-center gap-2 text-[15px] font-semibold">
                         {m.name}
                         {m.recommended && (
-                          <span className="rounded-pill bg-accent px-2 py-0.5 text-[10px] font-bold text-black">Consigliato</span>
+                          <span className="rounded-pill bg-ocean px-2 py-0.5 text-[10px] font-bold text-white">Consigliato</span>
                         )}
                         {m.multilingual && (
                           <span className="rounded-pill border border-border px-2 py-0.5 text-[10px] text-muted">IT + EN</span>
@@ -162,14 +162,14 @@ export function LocalModels() {
                     ) : pct !== undefined ? (
                       <div className="w-36">
                         <div className="h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label={`Download ${m.name}`}>
-                          <motion.div className="h-full rounded-full bg-accent" animate={{ width: `${pct}%` }} transition={{ duration: 0.2 }} />
+                          <motion.div className="h-full rounded-full bg-ocean" animate={{ width: `${pct}%` }} transition={{ duration: 0.2 }} />
                         </div>
                         <p className="mt-1 text-right font-mono text-[11px] text-muted">{pct}%</p>
                       </div>
                     ) : (
                       <button
                         onClick={() => startDownload(m.id)}
-                        className="flex items-center gap-1.5 rounded-[10px] bg-accent px-3.5 py-2 text-[13px] font-semibold text-black transition-all hover:-translate-y-[1px] hover:shadow-glow active:scale-[0.98]"
+                        className="flex items-center gap-1.5 rounded-[10px] bg-ocean px-3.5 py-2 text-[13px] font-semibold text-white transition-all hover:-translate-y-[1px] hover:shadow-pop active:scale-[0.98]"
                       >
                         <Download size={14} /> Scarica
                       </button>

@@ -83,13 +83,13 @@ export function AppMockup() {
                 <div className="mt-3 space-y-2">
                   {favs.map((f) => (
                     <div key={f.name} className="flex items-center gap-2 rounded-[10px] border border-border bg-background px-3 py-2.5 text-sm">
-                      <Star size={14} className="text-accent" />
+                      <Star size={14} className="text-ocean" />
                       {f.name}
-                      {f.badge ? <span className="ml-auto rounded-pill bg-accent px-2 py-0.5 text-[10px] font-bold text-black">{f.badge}</span> : null}
+                      {f.badge ? <span className="ml-auto rounded-pill bg-ocean px-2 py-0.5 text-[10px] font-bold text-white">{f.badge}</span> : null}
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 rounded-[10px] border border-accent/25 bg-accentSoft p-3 text-xs text-muted">
+                <div className="mt-4 rounded-[10px] border border-ocean/25 bg-oceanSoft p-3 text-xs text-muted">
                   Tip: hold <kbd>⌥</kbd> + <kbd>space</kbd> anywhere to dictate.
                 </div>
               </div>

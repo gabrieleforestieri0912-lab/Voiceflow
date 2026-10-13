@@ -23,7 +23,7 @@ export function Faq() {
           const isOpen = open === i;
           return (
             <Reveal key={f.q} delay={i * 0.05}>
-              <div className={cn("overflow-hidden rounded-card border transition-colors", isOpen ? "border-accent/30 bg-surface" : "border-border bg-surface")}>
+              <div className={cn("overflow-hidden rounded-card border transition-colors", isOpen ? "border-ocean/30 bg-surface" : "border-border bg-surface")}>
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
@@ -31,7 +31,7 @@ export function Faq() {
                   className="flex w-full items-center gap-3 px-5 py-4 text-left font-medium"
                 >
                   {f.q}
-                  <span className={cn("ml-auto grid h-8 w-8 shrink-0 place-items-center rounded-full border border-border transition-transform duration-standard", isOpen && "rotate-45 border-accent/40 text-accent")}>
+                  <span className={cn("ml-auto grid h-8 w-8 shrink-0 place-items-center rounded-full border border-border transition-transform duration-standard", isOpen && "rotate-45 border-ocean text-ocean")}>
                     <Plus size={16} />
                   </span>
                 </button>

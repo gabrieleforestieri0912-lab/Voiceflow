@@ -18,7 +18,7 @@ export function CustomMode() {
           {blocks.map((b) => (
             <StaggerItem key={b.title}>
               <div className="card-shadow flex gap-4 rounded-card border border-border bg-surface p-5">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[12px] bg-accentSoft text-accent">{b.icon}</span>
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[12px] bg-leafSoft text-leaf">{b.icon}</span>
                 <div>
                   <h3 className="font-semibold">{b.title}</h3>
                   <p className="mt-1 text-[15px] text-muted">{b.text}</p>
@@ -37,12 +37,12 @@ export function CustomMode() {
             </div>
             <pre className="p-5 font-mono text-[13.5px] leading-relaxed text-muted">
               <code>
-                <span className="text-accent"># mode: standup</span>{"\n"}
+                <span className="text-leaf"># mode: standup</span>{"\n"}
                 <span className="text-dim">tone:</span> casual, short{"\n"}
                 <span className="text-dim">format:</span> 3 bullets + blockers{"\n"}
                 <span className="text-dim">language:</span> auto → en{"\n\n"}
                 <span className="text-foreground">yesterday I fixed the login bug…</span>
-                <span className="cursor-blink ml-1 inline-block h-4 w-[7px] bg-accent align-middle" />
+                <span className="cursor-blink ml-1 inline-block h-4 w-[7px] bg-leaf align-middle" />
               </code>
             </pre>
           </div>

@@ -38,7 +38,7 @@ const rows: Key[][] = [
   [
     { label: "Ctrl" }, { label: "Alt" },
     { label: "Space", wide: "flex-[6]", title: "Dictate anywhere" },
-    { label: "Alt" }, { label: "Enter", wide: "flex-[2.2] bg-accent/15 border-accent/30", title: "Insert text" },
+    { label: "Alt" }, { label: "Enter", wide: "flex-[2.2] bg-azure/15 border-azure/30", title: "Insert text" },
   ],
 ];
 
@@ -78,9 +78,9 @@ export function Integrations() {
                       title={appName ?? k.title ?? (k.label === "Space" ? "Dictate anywhere" : k.label)}
                       aria-label={appName ?? k.label}
                       className={cn(
-                        "flex h-11 w-full items-center justify-center rounded-[10px] border border-border bg-background text-muted transition-all duration-micro hover:border-accent/40 active:translate-y-[2px] sm:h-12",
+                        "flex h-11 w-full items-center justify-center rounded-[10px] border border-border bg-background text-muted transition-all duration-micro hover:border-azure/40 active:translate-y-[2px] sm:h-12",
                         k.wide,
-                        lit && "border-accent/60 bg-accentSoft text-accent"
+                        lit && "border-azure/60 bg-azureSoft text-azure"
                       )}
                     >
                       {k.app ? (

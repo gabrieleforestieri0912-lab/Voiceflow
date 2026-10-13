@@ -40,7 +40,7 @@ function Waveform({ active }: { active: boolean }) {
       {Array.from({ length: 24 }).map((_, i) => (
         <motion.span
           key={i}
-          className="w-[3px] rounded-full bg-accent"
+          className="w-[3px] rounded-full bg-azure"
           animate={active && !reduce ? { height: [5, 12 + Math.abs(Math.sin(i * 0.8)) * 20, 5] } : { height: 5 }}
           transition={active && !reduce ? { duration: 0.7, repeat: Infinity, delay: i * 0.03 } : { duration: 0.2 }}
           style={{ height: 5 }}
@@ -188,7 +188,7 @@ export function DesktopOverlay() {
                     {action === a.id && (
                       <motion.span
                         layoutId="desktop-action-pill"
-                        className="absolute inset-0 rounded-pill bg-accent"
+                        className="absolute inset-0 rounded-pill bg-azure"
                         transition={{ duration: 0.4, ease: [...EASE] }}
                       />
                     )}
@@ -231,7 +231,7 @@ export function DesktopOverlay() {
               {/* Pannello opzioni */}
               <div className="rounded-[14px] border border-border bg-surface p-4">
                 <h3 className="flex items-center gap-2 text-sm font-semibold">
-                  <Settings2 size={14} className="text-accent" /> Opzioni
+                  <Settings2 size={14} className="text-azure" /> Opzioni
                 </h3>
                 <label className="mt-4 block text-xs text-dim">
                   Microfono
@@ -278,7 +278,7 @@ export function DesktopOverlay() {
                     role="switch"
                     aria-checked={autoPaste}
                     onClick={() => setAutoPaste((v) => !v)}
-                    className={cn("relative h-6 w-11 rounded-full transition-colors", autoPaste ? "bg-accent" : "bg-surface-2")}
+                    className={cn("relative h-6 w-11 rounded-full transition-colors", autoPaste ? "bg-azure" : "bg-surface-2")}
                   >
                     <span
                       className={cn(
@@ -290,15 +290,15 @@ export function DesktopOverlay() {
                 </div>
 
                 {/* Shortcut per la registrazione vocale */}
-                <div className="mt-4 rounded-[10px] border border-accent/25 bg-accentSoft p-3">
+                <div className="mt-4 rounded-[10px] border border-azure/25 bg-azureSoft p-3">
                   <p className="flex items-center gap-1.5 text-xs font-semibold">
-                    <Keyboard size={13} className="text-accent" /> Shortcut registrazione
+                    <Keyboard size={13} className="text-azure" /> Shortcut registrazione
                   </p>
                   <div className="mt-2 flex items-center gap-2">
                     <kbd className="text-[13px]">{recordingKeys ? "premi i tasti…" : shortcut}</kbd>
                     <button
                       onClick={() => setRecordingKeys(true)}
-                      className="rounded-[8px] border border-border bg-background px-2.5 py-1 text-xs hover:border-accent/40"
+                      className="rounded-[8px] border border-border bg-background px-2.5 py-1 text-xs hover:border-azure"
                     >
                       {recordingKeys ? "In ascolto…" : "Cambia"}
                     </button>
@@ -319,7 +319,7 @@ export function DesktopOverlay() {
 
                 <button
                   onClick={() => startRecording()}
-                  className="mt-4 w-full rounded-[12px] bg-accent px-4 py-2.5 text-sm font-semibold text-black transition-all hover:-translate-y-[1px] hover:shadow-glow active:scale-[0.98]"
+                  className="mt-4 w-full rounded-[12px] bg-foreground px-4 py-2.5 text-sm font-semibold text-background transition-all hover:-translate-y-[1px] hover:shadow-pop active:scale-[0.98]"
                 >
                   ▶ Prova la registrazione
                 </button>
