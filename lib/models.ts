@@ -18,8 +18,8 @@ export type LocalModel = {
 
 export const MODEL_CATALOG: LocalModel[] = [
   {
-    id: "vocalis-tiny",
-    name: "Vocalis Tiny",
+    id: "voiceflow-tiny",
+    name: "Voiceflow Tiny",
     params: "39M",
     size: "75 MB",
     sizeMb: 75,
@@ -30,8 +30,8 @@ export const MODEL_CATALOG: LocalModel[] = [
     desc: "Bozze veloci in inglese, CPU datate.",
   },
   {
-    id: "vocalis-base",
-    name: "Vocalis Base",
+    id: "voiceflow-base",
+    name: "Voiceflow Base",
     params: "74M",
     size: "145 MB",
     sizeMb: 145,
@@ -42,8 +42,8 @@ export const MODEL_CATALOG: LocalModel[] = [
     desc: "Equilibrio per appunti quotidiani in inglese.",
   },
   {
-    id: "vocalis-small",
-    name: "Vocalis Small",
+    id: "voiceflow-small",
+    name: "Voiceflow Small",
     params: "244M",
     size: "480 MB",
     sizeMb: 480,
@@ -55,8 +55,8 @@ export const MODEL_CATALOG: LocalModel[] = [
     recommended: true,
   },
   {
-    id: "vocalis-medium",
-    name: "Vocalis Medium",
+    id: "voiceflow-medium",
+    name: "Voiceflow Medium",
     params: "769M",
     size: "1.5 GB",
     sizeMb: 1536,
@@ -67,8 +67,8 @@ export const MODEL_CATALOG: LocalModel[] = [
     desc: "Preciso su accenti e gergo tecnico.",
   },
   {
-    id: "vocalis-large",
-    name: "Vocalis Large",
+    id: "voiceflow-large",
+    name: "Voiceflow Large",
     params: "1.5B",
     size: "2.9 GB",
     sizeMb: 2969,
@@ -80,18 +80,18 @@ export const MODEL_CATALOG: LocalModel[] = [
   },
 ];
 
-const DOWNLOADED_KEY = "vocalis-models-downloaded";
-const ACTIVE_KEY = "vocalis-active-model";
-export const MODELS_CHANGED_EVENT = "vocalis-models-changed";
+const DOWNLOADED_KEY = "voiceflow-models-downloaded";
+const ACTIVE_KEY = "voiceflow-active-model";
+export const MODELS_CHANGED_EVENT = "voiceflow-models-changed";
 
 export function loadDownloaded(): string[] {
   try {
     const raw = localStorage.getItem(DOWNLOADED_KEY);
-    if (!raw) return ["vocalis-base"]; // preinstallato
+    if (!raw) return ["voiceflow-base"]; // preinstallato
     const arr = JSON.parse(raw);
-    return Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : ["vocalis-base"];
+    return Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : ["voiceflow-base"];
   } catch {
-    return ["vocalis-base"];
+    return ["voiceflow-base"];
   }
 }
 
@@ -104,9 +104,9 @@ export function saveDownloaded(ids: string[]) {
 
 export function loadActiveModel(): string {
   try {
-    return localStorage.getItem(ACTIVE_KEY) ?? "vocalis-base";
+    return localStorage.getItem(ACTIVE_KEY) ?? "voiceflow-base";
   } catch {
-    return "vocalis-base";
+    return "voiceflow-base";
   }
 }
 

@@ -1,5 +1,5 @@
-// Matrice di compatibilità Vocalis (dati fittizi).
-// Principio tecnico: Vocalis scrive a livello di sistema operativo nel campo
+// Matrice di compatibilità Voiceflow (dati fittizi).
+// Principio tecnico: Voiceflow scrive a livello di sistema operativo nel campo
 // di testo attivo — quindi funziona in QUALSIASI input, senza plugin per-app.
 
 import type { AppId } from "@/components/landing/AppLogos";
@@ -72,7 +72,7 @@ export const COMPAT_CATEGORIES: CompatCategory[] = [
   {
     id: "other",
     title: "…e tutto il resto",
-    desc: "Se ci puoi scrivere, Vocalis ci detta.",
+    desc: "Se ci puoi scrivere, Voiceflow ci detta.",
     apps: [
       { name: "WhatsApp", logo: "whatsapp", note: "web + desktop" },
       { name: "Telegram", logo: "telegram", note: "chat e canali" },

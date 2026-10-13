@@ -16,8 +16,8 @@ import {
 import { cn } from "@/lib/utils";
 
 export function LocalModels() {
-  const [downloaded, setDownloaded] = useState<string[]>(["vocalis-base"]);
-  const [active, setActive] = useState("vocalis-base");
+  const [downloaded, setDownloaded] = useState<string[]>(["voiceflow-base"]);
+  const [active, setActive] = useState("voiceflow-base");
   const [progress, setProgress] = useState<Record<string, number>>({});
   const timers = useRef<number[]>([]);
 
@@ -63,13 +63,13 @@ export function LocalModels() {
   };
 
   const remove = (id: string) => {
-    if (id === "vocalis-base") return; // preinstallato, non rimovibile
+    if (id === "voiceflow-base") return; // preinstallato, non rimovibile
     const next = loadDownloaded().filter((x) => x !== id);
     saveDownloaded(next);
     setDownloaded(next);
     if (active === id) {
-      saveActiveModel("vocalis-base");
-      setActive("vocalis-base");
+      saveActiveModel("voiceflow-base");
+      setActive("voiceflow-base");
     }
   };
 
@@ -153,8 +153,8 @@ export function LocalModels() {
                     {isDown ? (
                       <button
                         onClick={() => remove(m.id)}
-                        disabled={m.id === "vocalis-base"}
-                        title={m.id === "vocalis-base" ? "Modello preinstallato" : `Elimina ${m.name}`}
+                        disabled={m.id === "voiceflow-base"}
+                        title={m.id === "voiceflow-base" ? "Modello preinstallato" : `Elimina ${m.name}`}
                         className="grid h-9 w-9 place-items-center rounded-[10px] border border-border text-muted transition-colors hover:border-danger/50 hover:text-danger disabled:cursor-not-allowed disabled:opacity-40"
                       >
                         <Trash2 size={15} />

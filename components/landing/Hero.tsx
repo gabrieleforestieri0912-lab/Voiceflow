@@ -171,7 +171,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.25, ease: [...EASE] }}
           className="mx-auto mt-5 max-w-xl text-balance text-muted"
         >
-          Vocalis turns your voice into clean text anywhere you work. Hold a key, talk, release — done.
+          Voiceflow turns your voice into clean text anywhere you work. Hold a key, talk, release — done.
         </motion.p>
         <motion.p
           initial={reduce ? {} : { opacity: 0 }}

@@ -7,7 +7,7 @@ import { Reveal, Section, SectionHeading } from "@/components/ui/Reveal";
 type T = { name: string; role: string; quote: string; rot: number; initials: string };
 
 const initial: T[] = [
-  { name: "Mara Voss", role: "Fictional PM", quote: "I dictate standups while making coffee. Vocalis formats them before I sit down.", rot: -2, initials: "MV" },
+  { name: "Mara Voss", role: "Fictional PM", quote: "I dictate standups while making coffee. Voiceflow formats them before I sit down.", rot: -2, initials: "MV" },
   { name: "Theo Lindt", role: "Fake indie hacker", quote: "Voice to commit message in three seconds. My keyboard feels abandoned.", rot: 1.5, initials: "TL" },
   { name: "Aya Ferro", role: "Imaginary novelist", quote: "I whisper chapters on walks. Drafts arrive clean, with my slang intact.", rot: -1, initials: "AF" },
   { name: "Jonas Reber", role: "Placeholder dev", quote: "Custom modes turned rambling into tickets. QA thinks I hired an assistant.", rot: 2, initials: "JR" },

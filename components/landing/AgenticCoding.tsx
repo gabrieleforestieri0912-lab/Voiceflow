@@ -11,7 +11,7 @@ const points = [
   { icon: <GitBranch size={17} />, title: "Review in seconds", text: "Green lines in, doubts out. Approve or retry by voice." },
 ];
 
-const typedLine = "vocalis dictate: refactor login hook and cover expired tokens";
+const typedLine = "voiceflow dictate: refactor login hook and cover expired tokens";
 const steps = ["Read(src/auth/useLogin.ts)", "Update(src/auth/useLogin.ts)"];
 const diff = [
   { n: "12", t: "  const token = store.get()", plus: false },
@@ -86,7 +86,7 @@ export function AgenticCoding() {
             <div className="p-4 font-mono text-[13px] leading-relaxed sm:p-5">
               <pre className="whitespace-pre-wrap text-dim" aria-hidden>
 {`+----------------------------------+
-|  Vocalis agent ready. Speak up.  |
+| Voiceflow agent ready. Speak up. |
 +----------------------------------+`}
               </pre>
               <p className="mt-3">

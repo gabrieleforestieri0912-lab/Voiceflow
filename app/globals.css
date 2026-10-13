@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../tailwind.config.ts";
 
 /* Vocalis design tokens — fittizio, originale */
 :root {

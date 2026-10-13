@@ -15,9 +15,9 @@ const nav = [
 
 const apps = ["Cursor", "Claude", "Browser", "Slack", "Gmail", "Terminal"];
 const favs = [
-  { name: "Vocalis Clear", badge: "Most popular" },
-  { name: "Vocalis Fast", badge: null },
-  { name: "Vocalis Precise", badge: null },
+  { name: "Voiceflow Clear", badge: "Most popular" },
+  { name: "Voiceflow Fast", badge: null },
+  { name: "Voiceflow Precise", badge: null },
 ];
 
 export function AppMockup() {
@@ -37,7 +37,7 @@ export function AppMockup() {
             <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
             <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
             <span className="h-3 w-3 rounded-full bg-[#28C840]" />
-            <span className="ml-3 font-mono text-xs text-dim">vocalis — settings</span>
+            <span className="ml-3 font-mono text-xs text-dim">voiceflow — settings</span>
           </div>
           <div className="grid md:grid-cols-[220px_1fr]">
             <aside className="border-b border-border p-3 md:border-b-0 md:border-r">
@@ -65,7 +65,7 @@ export function AppMockup() {
                 <p className="mt-1 text-sm text-dim">Placeholder settings, nothing real.</p>
                 <label className="mt-4 block text-xs text-dim">
                   Language model
-                  <span className="mt-1.5 block rounded-[10px] border border-border bg-background px-3 py-2.5 text-sm text-foreground">Vocalis Clear v2</span>
+                  <span className="mt-1.5 block rounded-[10px] border border-border bg-background px-3 py-2.5 text-sm text-foreground">Voiceflow Clear v2</span>
                 </label>
                 <label className="mt-3 block text-xs text-dim">
                   Voice model

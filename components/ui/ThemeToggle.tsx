@@ -17,7 +17,7 @@ export function ThemeToggle() {
     document.documentElement.classList.remove("dark", "light");
     document.documentElement.classList.add(next);
     try {
-      localStorage.setItem("vocalis-theme", next);
+      localStorage.setItem("voiceflow-theme", next);
     } catch {}
   };
 

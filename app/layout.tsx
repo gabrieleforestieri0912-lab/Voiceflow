@@ -15,15 +15,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vocalis — Just speak. Write faster.",
+  title: "Voiceflow — Just speak. Write faster.",
   description:
-    "Vocalis è l'app di dettatura vocale AI (placeholder fittizio): premi un tasto, parla, il testo appare in qualsiasi app. Offline, multilingua, con modalità personalizzate.",
+    "Voiceflow è l'app di dettatura vocale AI (placeholder fittizio): premi un tasto, parla, il testo appare in qualsiasi app. Offline, multilingua, con modalità personalizzate.",
 };
 
 function themeInit() {
   // Default: scuro. Rispetta scelta salvata, altrimenti OS.
   try {
-    const saved = localStorage.getItem("vocalis-theme");
+    const saved = localStorage.getItem("voiceflow-theme");
     const root = document.documentElement;
     root.classList.remove("dark", "light");
     if (saved === "light") root.classList.add("light");

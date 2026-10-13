@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 type DesktopAction = "Dettatura" | "Migliora" | "Riassumi";
 
 const ACTIONS: { id: DesktopAction; icon: React.ReactNode; hint: string }[] = [
-  { id: "Dettatura", icon: <Mic size={15} />, hint: "Parla, Vocalis scrive dove è il cursore." },
+  { id: "Dettatura", icon: <Mic size={15} />, hint: "Parla, Voiceflow scrive dove è il cursore." },
   { id: "Migliora", icon: <Wand2 size={15} />, hint: "Riscrive il testo selezionato nel tono giusto." },
   { id: "Riassumi", icon: <ListChecks size={15} />, hint: "Condensa meeting e thread in punti azione." },
 ];
@@ -57,8 +57,8 @@ export function DesktopOverlay() {
   const [recordingKeys, setRecordingKeys] = useState(false);
   const [mic, setMic] = useState("Microfono integrato");
   const [lang, setLang] = useState("Auto (IT)");
-  const [modelId, setModelId] = useState("vocalis-base");
-  const [modelChoices, setModelChoices] = useState<string[]>(["vocalis-base"]);
+  const [modelId, setModelId] = useState("voiceflow-base");
+  const [modelChoices, setModelChoices] = useState<string[]>(["voiceflow-base"]);
   const [autoPaste, setAutoPaste] = useState(true);
   const [phase, setPhase] = useState<"idle" | "rec" | "done">("idle");
   const [text, setText] = useState("");
@@ -169,7 +169,7 @@ export function DesktopOverlay() {
               <div
                 className="flex items-center gap-1 rounded-pill border border-border bg-surface/95 p-1.5 shadow-glow backdrop-blur-xl"
                 role="toolbar"
-                aria-label="Vocalis overlay: 3 azioni rapide"
+                aria-label="Voiceflow overlay: 3 azioni rapide"
               >
                 {ACTIONS.map((a) => (
                   <button

@@ -13,7 +13,7 @@ export function Compatibility() {
       <SectionHeading
         eyebrow="Compatibilità totale"
         title="Un input? Allora funziona."
-        sub="Vocalis scrive nel campo di testo attivo a livello di sistema: browser, Cursor, Claude, chatbot e qualsiasi programma — senza plugin."
+        sub="Voiceflow scrive nel campo di testo attivo a livello di sistema: browser, Cursor, Claude, chatbot e qualsiasi programma — senza plugin."
       />
 
       <Stagger className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

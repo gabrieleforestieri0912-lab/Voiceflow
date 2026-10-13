@@ -4,7 +4,7 @@ import { Wand2, Blocks, Zap } from "lucide-react";
 import { Reveal, Section, SectionHeading, Stagger, StaggerItem } from "@/components/ui/Reveal";
 
 const blocks = [
-  { icon: <Wand2 size={18} />, title: "Describe the output", text: "Tell Vocalis how formal, how long, which language. Placeholder logic." },
+  { icon: <Wand2 size={18} />, title: "Describe the output", text: "Tell Voiceflow how formal, how long, which language. Placeholder logic." },
   { icon: <Blocks size={18} />, title: "Reuse everywhere", text: "One custom mode, available in every app via the same shortcut." },
   { icon: <Zap size={18} />, title: "Switch instantly", text: "Cycle modes with a keypress. No menus, no clicks." },
 ];
@@ -12,7 +12,7 @@ const blocks = [
 export function CustomMode() {
   return (
     <Section className="pb-20 sm:pb-28">
-      <SectionHeading eyebrow="Custom mode" title="Teach Vocalis your style" />
+      <SectionHeading eyebrow="Custom mode" title="Teach Voiceflow your style" />
       <div className="mt-10 grid items-stretch gap-4 lg:grid-cols-2">
         <Stagger className="grid gap-4">
           {blocks.map((b) => (

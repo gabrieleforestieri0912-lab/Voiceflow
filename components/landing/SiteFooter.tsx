@@ -24,7 +24,7 @@ export function SiteFooter() {
         <div className="grid gap-10 lg:grid-cols-[1.2fr_2fr]">
           <div>
             <Logo />
-            <p className="mt-3 max-w-xs text-sm text-muted">Vocalis — fictional AI dictation. Just speak, write faster. No real data, all placeholder.</p>
+            <p className="mt-3 max-w-xs text-sm text-muted">Voiceflow — fictional AI dictation. Just speak, write faster. No real data, all placeholder.</p>
             <form
               className="mt-5 flex max-w-xs gap-2"
               onSubmit={(e) => {
@@ -71,7 +71,7 @@ export function SiteFooter() {
           </nav>
         </div>
         <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6 text-xs text-dim">
-          <span>© {year} Vocalis Labs (fictional). All rights reserved.</span>
+          <span>© {year} Voiceflow Labs (fictional). All rights reserved.</span>
           <span className="font-mono">Just speak. Write faster.</span>
         </div>
       </div>

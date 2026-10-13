@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type Common = {
@@ -62,16 +63,9 @@ export function Pill({ children, className }: { children: ReactNode; className?:
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
-    <a href="#top" className="flex items-center gap-2.5" aria-label="Vocalis home">
-      <span className="grid h-8 w-8 place-items-center rounded-[10px] bg-accent text-black" aria-hidden>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-          <path d="M12 3v10" />
-          <rect x="9" y="3" width="6" height="11" rx="3" />
-          <path d="M6 11a6 6 0 0 0 12 0" />
-          <path d="M12 17v4" />
-        </svg>
-      </span>
-      {!compact && <span className="text-[17px] font-semibold tracking-tight">Vocalis</span>}
+    <a href="#top" className="flex items-center gap-2.5" aria-label="Voiceflow home">
+      <Image src="/voiceflow-icon.svg" alt="" width={32} height={32} className="h-8 w-8 rounded-[10px]" aria-hidden />
+      {!compact && <span className="text-[17px] font-semibold tracking-tight">Voiceflow</span>}
     </a>
   );
 }

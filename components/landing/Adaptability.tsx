@@ -32,7 +32,7 @@ export function Adaptability() {
   const [tab, setTab] = useState<Tone>("Formal");
   return (
     <Section id="adaptability" className="py-20 sm:py-28">
-      <SectionHeading eyebrow="Adaptability" title="Communication isn't one-size-fits-all" sub="Same idea, four registers. Vocalis rewrites on the fly." />
+      <SectionHeading eyebrow="Adaptability" title="Communication isn't one-size-fits-all" sub="Same idea, four registers. Voiceflow rewrites on the fly." />
       <Reveal delay={0.1} className="mt-8 flex justify-center">
         <div className="relative flex rounded-pill border border-border bg-surface p-1" role="tablist" aria-label="Tone">
           {(Object.keys(variants) as Tone[]).map((t) => (
@@ -68,7 +68,7 @@ export function Adaptability() {
                 exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
                 transition={{ duration: 0.35, ease: [...EASE] }}
               >
-                <p className="mb-1 text-xs text-dim">{tab} · Vocalis</p>
+                <p className="mb-1 text-xs text-dim">{tab} · Voiceflow</p>
                 <p className="text-[15px]">{variants[tab].reply}</p>
                 <p className="mt-2 inline-flex rounded-pill bg-background/60 px-2.5 py-0.5 text-xs text-muted">{variants[tab].tone}</p>
               </motion.div>

@@ -5,8 +5,8 @@ import { Compatibility } from "@/components/landing/Compatibility";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 
 export const metadata = {
-  title: "Vocalis Desktop — overlay + shortcut",
-  description: "Anteprima dell'interfaccia desktop Vocalis: pill con 3 bottoni in alto al centro e shortcut per la registrazione vocale.",
+  title: "Voiceflow Desktop — overlay + shortcut",
+  description: "Anteprima dell'interfaccia desktop Voiceflow: pill con 3 bottoni in alto al centro e shortcut per la registrazione vocale.",
 };
 
 export default function DesktopPage() {

@@ -11,7 +11,7 @@ export function Mobile() {
       <div className="card-shadow grid items-center gap-8 rounded-card border border-border bg-surface p-6 sm:p-10 lg:grid-cols-2">
         <div>
           <Reveal>
-            <h2 className="text-balance">Take Vocalis anywhere</h2>
+            <h2 className="text-balance">Take Voiceflow anywhere</h2>
           </Reveal>
           <Reveal delay={0.05}>
             <p className="mt-3 text-muted">Fictional companion app. Scan the placeholder QR to get the fake beta link.</p>
