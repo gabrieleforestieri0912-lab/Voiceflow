@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const faqs = [
   { q: "Is my voice sent to the cloud?", a: "Placeholder answer: base transcription runs on-device in this fictional product. Cloud features would be opt-in and never bundle API keys." },
-  { q: "Which apps does it work in?", a: "Anywhere you can type: Slack, Gmail, Cursor, Notes and the rest. It pastes at your cursor, no plugins needed." },
+  { q: "Which apps does it work in?", a: "Everywhere you can type: browser inputs, Cursor, VS Code, Claude, ChatGPT and any other chatbot or program. It pastes at your cursor — no plugins, no per-app setup." },
   { q: "Can I teach it my words?", a: "Yes — add names, acronyms and jargon to Vocabulary once. Fictional demo data only." },
   { q: "What if I can't talk right now?", a: "Use text-only mode: type the rough idea and let a Mode rewrite it in the right register." },
 ];

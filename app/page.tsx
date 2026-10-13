@@ -11,6 +11,7 @@ const DesktopOverlay = dynamic(() => import("@/components/landing/DesktopOverlay
 const LocalModels = dynamic(() => import("@/components/landing/LocalModels").then((m) => m.LocalModels), { ssr: true });
 const CustomMode = dynamic(() => import("@/components/landing/CustomMode").then((m) => m.CustomMode), { ssr: true });
 const Integrations = dynamic(() => import("@/components/landing/Integrations").then((m) => m.Integrations), { ssr: true });
+const Compatibility = dynamic(() => import("@/components/landing/Compatibility").then((m) => m.Compatibility), { ssr: true });
 const AgenticCoding = dynamic(() => import("@/components/landing/AgenticCoding").then((m) => m.AgenticCoding), { ssr: true });
 const Mobile = dynamic(() => import("@/components/landing/Mobile").then((m) => m.Mobile), { ssr: true });
 const Testimonials = dynamic(() => import("@/components/landing/Testimonials").then((m) => m.Testimonials), { ssr: true });
@@ -33,6 +34,7 @@ export default function Page() {
         <LocalModels />
         <CustomMode />
         <Integrations />
+        <Compatibility />
         <AgenticCoding />
         <Mobile />
         <Testimonials />

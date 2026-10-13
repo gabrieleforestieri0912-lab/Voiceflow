@@ -179,7 +179,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.35 }}
           className="mt-2 text-sm text-dim"
         >
-          Works in Slack, Gmail and any other app
+          Works in your browser, Cursor, Claude — and any other app or chatbot
         </motion.p>
 
         <motion.div

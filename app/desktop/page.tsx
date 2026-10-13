@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { DesktopOverlay } from "@/components/landing/DesktopOverlay";
 import { LocalModels } from "@/components/landing/LocalModels";
+import { Compatibility } from "@/components/landing/Compatibility";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 
 export const metadata = {
@@ -14,6 +15,7 @@ export default function DesktopPage() {
       <Navbar />
       <main>
         <DesktopOverlay />
+        <Compatibility />
         <LocalModels />
       </main>
       <SiteFooter />

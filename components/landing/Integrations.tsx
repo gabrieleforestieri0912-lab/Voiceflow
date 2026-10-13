@@ -26,7 +26,7 @@ const rows: Key[][] = [
     { label: "A", app: "telegram" }, { label: "S", app: "discord" }, { label: "D", app: "spotify" },
     { label: "F", app: "firefox" }, { label: "G", app: "zoom" }, { label: "H", app: "figma" },
     { label: "J", app: "linear" }, { label: "K", app: "obsidian" }, { label: "L", app: "github" },
-    { label: ";" }, { label: "'" },
+    { label: ";", app: "claude" }, { label: "'", app: "chatgpt" },
   ],
   [
     { label: "Shift", wide: "flex-[1.8]" },

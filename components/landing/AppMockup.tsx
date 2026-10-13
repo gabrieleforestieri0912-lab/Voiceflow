@@ -13,7 +13,7 @@ const nav = [
   { icon: <Settings size={15} />, label: "Configuration" },
 ];
 
-const apps = ["Cursor", "Slack", "Gmail", "Notes", "Docs"];
+const apps = ["Cursor", "Claude", "Browser", "Slack", "Gmail", "Terminal"];
 const favs = [
   { name: "Vocalis Clear", badge: "Most popular" },
   { name: "Vocalis Fast", badge: null },
@@ -71,7 +71,7 @@ export function AppMockup() {
                   Voice model
                   <span className="mt-1.5 block rounded-[10px] border border-border bg-background px-3 py-2.5 text-sm text-foreground">Nova voice</span>
                 </label>
-                <p className="mt-5 text-xs text-dim">Activate when using</p>
+                <p className="mt-5 text-xs text-dim">Works everywhere — these just get auto-enhance</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {apps.map((a) => (
                     <span key={a} className="rounded-pill border border-border bg-background px-3 py-1 text-xs text-muted">{a}</span>
