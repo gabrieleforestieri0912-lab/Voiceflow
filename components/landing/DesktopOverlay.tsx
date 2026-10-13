@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Mic, Wand2, ListChecks, Settings2, Keyboard } from "lucide-react";
 import { Reveal, Section, SectionHeading } from "@/components/ui/Reveal";
 import { EASE } from "@/components/ui/Reveal";
+import { MODEL_CATALOG, MODELS_CHANGED_EVENT, loadActiveModel, loadDownloaded } from "@/lib/models";
 import { cn } from "@/lib/utils";
 
 type DesktopAction = "Dettatura" | "Migliora" | "Riassumi";
@@ -56,6 +57,8 @@ export function DesktopOverlay() {
   const [recordingKeys, setRecordingKeys] = useState(false);
   const [mic, setMic] = useState("Microfono integrato");
   const [lang, setLang] = useState("Auto (IT)");
+  const [modelId, setModelId] = useState("vocalis-base");
+  const [modelChoices, setModelChoices] = useState<string[]>(["vocalis-base"]);
   const [autoPaste, setAutoPaste] = useState(true);
   const [phase, setPhase] = useState<"idle" | "rec" | "done">("idle");
   const [text, setText] = useState("");
@@ -92,6 +95,21 @@ export function DesktopOverlay() {
     },
     [action, reduce]
   );
+
+  // Modello AI locale attivo (condiviso con la sezione Modelli)
+  useEffect(() => {
+    const sync = () => {
+      setModelId(loadActiveModel());
+      setModelChoices(loadDownloaded());
+    };
+    sync();
+    window.addEventListener(MODELS_CHANGED_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener(MODELS_CHANGED_EVENT, sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
 
   // Shortcut globale: la combo salvata fa partire la registrazione
   useEffect(() => {
@@ -205,7 +223,8 @@ export function DesktopOverlay() {
                 </div>
                 <p className="mt-3 text-xs text-dim">
                   {ACTIONS.find((a) => a.id === action)?.hint}{" "}
-                  {autoPaste && phase === "done" ? "Incollato dove era il cursore ✓" : ""}
+                  {autoPaste && phase === "done" ? "Incollato dove era il cursore ✓" : ""}{" "}
+                  <span className="font-mono">[{MODEL_CATALOG.find((m) => m.id === modelId)?.name ?? modelId}]</span>
                 </p>
               </div>
 
@@ -237,6 +256,20 @@ export function DesktopOverlay() {
                     <option>Italiano</option>
                     <option>English</option>
                     <option>Auto → EN</option>
+                  </select>
+                </label>
+                <label className="mt-3 block text-xs text-dim">
+                  Modello AI locale
+                  <select
+                    value={modelId}
+                    onChange={(e) => setModelId(e.target.value)}
+                    className="mt-1.5 w-full rounded-[10px] border border-border bg-background px-3 py-2 text-sm text-foreground"
+                  >
+                    {MODEL_CATALOG.filter((m) => modelChoices.includes(m.id)).map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.name} · {m.size}
+                      </option>
+                    ))}
                   </select>
                 </label>
                 <div className="mt-4 flex items-center justify-between text-sm">
