@@ -1,5 +1,12 @@
 # VoiceFlow — Scope Giorno 1
 
+> **Documento storico (2026-09-11, Fase 1) — resta per riferimento, non riscritto.**
+> Evoluzione successiva: monorepo unico con `desktop/` (Electron, scaffolding verificato
+> il 2026-10-13) + `mobile/` (Flutter) + Web in root; produzione su
+> <https://voiceflow-voice.vercel.app> (scope Vercel `Vertex`); backend in Opzione 2
+> (proxy puro Whisper, tabelle licenze rimosse); struttura `app-desktop/`/`app-web` e i due
+> repo separati citati sotto **non esistono più**.
+>
 > **Stato:** Fase 1 (scope) approvata — Fasi 2–4 eseguite. Riepilogo di giornata: [`day1-summary.md`](day1-summary.md)
 > **Branch:** `feature/voiceflow-day1-20260911-124406`
 > **Data:** 2026-09-11

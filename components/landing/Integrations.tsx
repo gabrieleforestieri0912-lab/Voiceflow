@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 type Key = { label: string; app?: AppId; wide?: string; title?: string };
 
-// Ogni tasto-lettera porta il vero logo dell'app (shape ufficiale, colore adattivo al tema).
+// Ogni tasto mostra il vero logo dell'app nei colori ufficiali (niente lettera dove c'è l'icona).
 const rows: Key[][] = [
   [
     { label: "Esc" }, { label: "1" }, { label: "2" }, { label: "3" }, { label: "4" },
@@ -84,10 +84,7 @@ export function Integrations() {
                       )}
                     >
                       {k.app ? (
-                        <span className="flex flex-col items-center gap-0.5">
-                          <AppLogo id={k.app} size={18} />
-                          <span className="hidden font-mono text-[9px] leading-none opacity-60 sm:block">{k.label}</span>
-                        </span>
+                        <AppLogo id={k.app} size={22} colored />
                       ) : (
                         <span className="font-mono text-xs">{k.label}</span>
                       )}

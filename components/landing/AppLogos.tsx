@@ -1,5 +1,8 @@
 // Loghi reali delle app (tracciati ufficiali Simple Icons, CC0).
-// Shape originale, colore via currentColor per contrasto in entrambi i temi.
+// Default: shape originale, colore via currentColor per contrasto in entrambi i temi.
+// Con `colored`: colori ufficiali del brand (variante chiara/scura per tema).
+
+import type { CSSProperties } from "react";
 
 export type AppId = "slack" | "notion" | "vscode" | "terminal" | "teams" | "word" | "outlook" | "gmail" | "whatsapp" | "telegram" | "discord" | "spotify" | "firefox" | "zoom" | "figma" | "linear" | "obsidian" | "github" | "gitlab" | "stackoverflow" | "reddit" | "youtube" | "x" | "gdrive" | "dropbox" | "claude" | "chatgpt" | "gemini" | "cursor";
 
@@ -66,17 +69,59 @@ const paths: Record<string, string> = {
   gemini: "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81",
 };
 
-export function AppLogo({ id, size = 18 }: { id: AppId; size?: number }) {
-  if (id === "cursor") {
+export function AppLogo({ id, size = 18, colored = false }: { id: AppId; size?: number; colored?: boolean }) {
+  const path = id === "cursor" ? "M6 3.5 18.5 12 11.8 13.2 9.4 20 6 3.5Z" : paths[id];
+  if (!colored) {
     return (
       <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden>
-        <path d="M6 3.5 18.5 12 11.8 13.2 9.4 20 6 3.5Z" />
+        <path d={path} />
       </svg>
     );
   }
+  const c = appColors[id];
   return (
-    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden>
-      <path d={paths[id]} />
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      aria-hidden
+      style={{ "--logo": c.light, "--logo-dark": c.dark } as CSSProperties}
+      className="[&>path]:fill-[var(--logo)] dark:[&>path]:fill-[var(--logo-dark)]"
+    >
+      <path d={path} />
     </svg>
   );
 }
+
+// Colori ufficiali dei brand — coppia chiaro/scuro per restare leggibili in entrambi i temi.
+const appColors: Record<AppId, { light: string; dark: string }> = {
+  slack: { light: "#E01E5A", dark: "#E01E5A" },
+  notion: { light: "#000000", dark: "#FFFFFF" },
+  vscode: { light: "#007ACC", dark: "#4DA6E0" },
+  terminal: { light: "#171717", dark: "#FAFAFA" },
+  teams: { light: "#6264A6", dark: "#8B8CC7" },
+  word: { light: "#2B579A", dark: "#41A5EE" },
+  outlook: { light: "#0F6CBD", dark: "#4FA3E3" },
+  gmail: { light: "#EA4335", dark: "#EA4335" },
+  whatsapp: { light: "#25D366", dark: "#25D366" },
+  telegram: { light: "#229ED9", dark: "#229ED9" },
+  discord: { light: "#5865F2", dark: "#5865F2" },
+  spotify: { light: "#1DB954", dark: "#1DB954" },
+  firefox: { light: "#FF7139", dark: "#FF7139" },
+  zoom: { light: "#2D8CFF", dark: "#2D8CFF" },
+  figma: { light: "#F24E1E", dark: "#F24E1E" },
+  linear: { light: "#5E6AD2", dark: "#8B92F5" },
+  obsidian: { light: "#7C3AED", dark: "#A78BFA" },
+  github: { light: "#181717", dark: "#FFFFFF" },
+  gitlab: { light: "#FC6D26", dark: "#FC6D26" },
+  stackoverflow: { light: "#F48024", dark: "#F48024" },
+  reddit: { light: "#FF4500", dark: "#FF4500" },
+  youtube: { light: "#FF0000", dark: "#FF0000" },
+  x: { light: "#000000", dark: "#FFFFFF" },
+  gdrive: { light: "#34A853", dark: "#34A853" },
+  dropbox: { light: "#0061FF", dark: "#4D94FF" },
+  claude: { light: "#D97757", dark: "#D97757" },
+  chatgpt: { light: "#10A37F", dark: "#3DDC97" },
+  gemini: { light: "#1A73E8", dark: "#8AB4F8" },
+  cursor: { light: "#000000", dark: "#FFFFFF" },
+};

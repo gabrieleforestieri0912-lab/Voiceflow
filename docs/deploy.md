@@ -1,6 +1,8 @@
-# Deploy e ambiente — sito web VoiceFlow
+# Deploy e ambiente — VoiceFlow (Web + Desktop + Mobile)
 
-Note operative sul progetto web. L'app desktop è in un repo separato.
+Note operative sul monorepo. Il deploy Vercel riguarda **solo il Web** (root Next.js);
+Desktop (`desktop/`) si distribuisce con installer `electron-builder`, Mobile (`mobile/`)
+con build store — vedi i rispettivi README.
 
 ## Vercel
 
@@ -16,12 +18,13 @@ Note operative sul progetto web. L'app desktop è in un repo separato.
 - Pull request → preview automatica.
 - Deploy manuale: `vercel --prod` (dalla root)
 
-Aggiornamento: la Root Directory su Vercel va cambiata da `app-web` a **vuota/root** dopo questo spostamento (Settings → General → Root Directory → Edit → svuota / lascia `.`).
+Root Directory su Vercel: **vuota/root** (il progetto Next è nella root del repo;
+`desktop/` e `mobile/` sono esclusi dal deploy — nessun `vercel.json` necessario).
 
 URL:
 
-- Produzione → <https://voiceflow-flax.vercel.app>
-- Alias: `voiceflow-vertex-9.vercel.app`, `voiceflow-git-main-vertex-9.vercel.app`
+- Produzione → <https://voiceflow-voice.vercel.app>
+- Alias precedenti: `voiceflow-flax.vercel.app`, `voiceflow-vertex-9.vercel.app`, `voiceflow-git-main-vertex-9.vercel.app`
 
 ## Environment Variables su Vercel
 
@@ -38,16 +41,31 @@ Vanno impostate per **Production** e **Preview**:
 
 Senza le `NEXT_PUBLIC_SUPABASE_*` la landing funziona comunque (è statica), ma auth/licenze reali no.
 
+## Env Desktop e Mobile (non Vercel, non committate)
+
+| Progetto | File / modo | Variabili |
+|----------|-------------|-----------|
+| Desktop (`desktop/`) | `desktop/.env` (da `.env.example`, gitignored) | `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (pubbliche), `VITE_LICENSE_KEY` opzionale |
+| Mobile (`mobile/`) | flag `--dart-define` a `flutter run/build` | `SUPABASE_URL`, `SUPABASE_ANON_KEY` (mai hardcodate) |
+| Edge Functions | `supabase secrets set` | `OPENAI_API_KEY` (**solo server**, mai nel bundle né nei client) |
+
 ## Supabase
 
 Il progetto Supabase deve essere **dedicato a VoiceFlow**: non riusare progetti di altri prodotti,
-per isolamento dei dati. Le migrazioni/schema vivranno in questo repo (o in un repo infrastruttura)
-quando si aggiungono auth e licenze.
+per isolamento dei dati.
 
-Nota: la Edge Function `transcribe` (proxy verso Whisper per la trascrizione) è **del desktop** e
-vive nel repo dell'app desktop, non qui.
+Stato attuale (Opzione 2 — proxy puro Whisper):
+
+- Edge Functions condivise da Desktop e Mobile: `transcribe` (legacy), `transcribe-audio`
+  (primaria, usata da `desktop/src/main/transcription.ts` e
+  `mobile/lib/services/transcription_service.dart`), `apply-mode` (stub `501`, fuori MVP).
+- Deploy: `supabase functions deploy transcribe transcribe-audio apply-mode` (dalla root).
+- Unica migration attiva: `202609130010_newsletter_signups.sql` (tabella `newsletter_signups`,
+  RLS insert-only). Le tabelle `licenses` / `transcription_usage` del Giorno 3 sono state rimosse.
 
 ## Verifica locale
+
+Web (richiede **Node.js 20.9+**, Next 16):
 
 ```bash
 npm install
@@ -55,4 +73,16 @@ cp .env.example .env.local
 npx tsc --noEmit
 npm run build
 npm run dev
+```
+
+Desktop:
+
+```bash
+cd desktop && npm install && npm run typecheck && npm run build
+```
+
+Mobile (richiede Flutter SDK ≥ 3.4):
+
+```bash
+cd mobile && flutter pub get && flutter analyze && flutter test
 ```

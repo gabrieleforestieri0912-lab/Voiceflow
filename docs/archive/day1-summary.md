@@ -1,5 +1,8 @@
 # VoiceFlow — Riepilogo Giorno 1
 
+> **Archivio storico (2026-09-11).** I percorsi `app-desktop/` e `Vertex/...` citati sotto si
+> riferiscono al layout pre-monorepo: oggi è `desktop/` in questo repo, Web in root.
+
 > Branch: `feature/voiceflow-day1-20260911-124406`
 > Data: 2026-09-11
 > Regola rispettata: nessun push su `main`, nessun merge.

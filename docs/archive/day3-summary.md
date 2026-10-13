@@ -1,5 +1,10 @@
 # VoiceFlow — Riepilogo Giorno 3 (Backend API, Proxy AI e Database)
 
+> **Archivio storico (2026-09-13).** Le migration `licenses` / `transcription_usage` descritte sotto
+> sono state **rimosse** (Opzione 2 — proxy puro, commit `48e4222`); unica migration attiva
+> `202609130010_newsletter_signups.sql`. I percorsi `Desktop/voiceflow` si riferiscono al layout
+> pre-monorepo: oggi è `desktop/` (+ `mobile/`) in questo repo.
+
 > Branch: `feature/voiceflow-day3-api-db-20260913-125259`
 > Data: 2026-09-13
 > Regola: nessun push su `main`, PR non mergiata, checkpoint tra fasi, RLS obbligatoria, nessuna chiave AI nel bundle.

@@ -2,6 +2,14 @@
 
 Branch: `landing/setup-design-system-20260913-142656` → commit `0e4930b`
 
+> **Evoluzione successiva (2026-10-13):** i tokens sotto sono quelli originari della Fase 0.
+> Stato corrente in `app/globals.css` + `tailwind.config.ts`: accento giallo `#FFD60A`
+> (solo Pricing), palette sezioni verde `#30D158` / blu `#0A84FF` / rosso `#FF453A` / azzurro,
+> hero "cielo all'alba", tema **chiaro/scuro con toggle** (`darkMode: "class"`,
+> `components/ui/ThemeToggle.tsx`), font Inter + Geist Mono. Sezioni correnti in
+> `components/landing/` (19 file: Navbar, Hero, LogoMarquee, Compatibility, LocalModels,
+> Integrations, Pricing, Faq, Tutorials, Mobile, SiteFooter…).
+
 ## Tokens confermati (decisione #1 — fallback scura teal/indigo)
 
 `app/globals.css` dark-only, HSL per shadcn cssVariables:

@@ -1,5 +1,9 @@
 # Giorno 3 — Checkpoint 2 — Edge Functions + client main
 
+> **Archivio storico (2026-09-13).** Il client main oggi vive in `desktop/src/main/transcription.ts`
+> (stesso contratto) ed è condiviso anche dal mobile (`mobile/lib/services/transcription_service.dart`).
+> Il percorso Windows citato sotto si riferiva al layout pre-monorepo.
+
 > Branch: `feature/voiceflow-day3-api-db-20260913-125259`
 > Data: 2026-09-13
 > Stato: **STOP — in attesa di conferma dopo Checkpoint 1**

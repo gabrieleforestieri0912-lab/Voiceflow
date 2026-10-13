@@ -1,5 +1,8 @@
 # Giorno 3 — Checkpoint 3 — Storico locale e vocabolario custom
 
+> **Archivio storico (2026-09-13).** Stub oggi in `desktop/src/services/storage/` (`history.ts`,
+> `vocabulary.ts`); resta fuori scope MVP come da `scope.md` §3.2.
+
 > Branch: `feature/voiceflow-day3-api-db-20260913-125259`
 > Data: 2026-09-13
 > Stato: **Verifica scope → rimandato (fuori MVP)**

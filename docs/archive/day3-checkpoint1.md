@@ -1,5 +1,9 @@
 # Giorno 3 — Checkpoint 1 — Schema database + RLS
 
+> **Archivio storico (2026-09-13).** Le migration `licenses` / `transcription_usage` sono state
+> **rimosse** (Opzione 2 — proxy puro); i percorsi `Web/...` e `Desktop/...` si riferiscono al
+> layout pre-monorepo.
+
 > Branch: `feature/voiceflow-day3-api-db-20260913-125259`
 > Data: 2026-09-13
 > Stato: **STOP — in attesa di conferma prima di Fase 2**

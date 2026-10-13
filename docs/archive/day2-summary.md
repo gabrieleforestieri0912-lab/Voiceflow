@@ -1,5 +1,8 @@
 # VoiceFlow — Riepilogo Giorno 2 (Onboarding Primo Avvio)
 
+> **Archivio storico (2026-09-12).** I percorsi `app-desktop/` e `Desktop/voiceflow` citati sotto
+> si riferiscono al layout pre-monorepo: oggi è `desktop/` in questo repo, Web in root.
+
 > Branch: `feature/voiceflow-day2-onboarding-<timestamp>` (creato da `feature/voiceflow-day1-*` / `main`)
 > Data: 2026-09-12
 > Regola: nessun push su `main`, PR non mergiata, checkpoint tra fasi.

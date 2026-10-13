@@ -1,37 +1,45 @@
-# VoiceFlow — Sito web
+# VoiceFlow — Web + Desktop + Mobile
 
-Landing, download e (in prospettiva) gestione licenza per **VoiceFlow**, l'app di dettatura vocale
-push-to-talk per Windows: tieni premuta una hotkey, parli, rilasci, e il testo viene incollato
-nell'app attiva.
+Landing, download e (in prospettiva) gestione licenza per **VoiceFlow**, dettatura vocale
+push-to-talk: tieni premuto, parli, rilasci, e il testo viene incollato nell'app attiva.
 
-Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy su **Vercel**.
+- **Web:** Next.js (App Router) + TypeScript + Tailwind CSS + Supabase. Deploy su **Vercel**.
+- **Desktop:** Electron + TypeScript + Vite + React (`desktop/`, Windows).
+- **Mobile:** Flutter (`mobile/`, Android + iOS).
 
-> Questo repo contiene **solo il sito web**. L'app desktop (Electron + TypeScript) è un progetto
-> separato in `Vertex/Desktop/voiceflow`.
-
-🌐 **Live:** <https://voiceflow-flax.vercel.app>
+🌐 **Live:** <https://voiceflow-voice.vercel.app>
 
 ## Struttura
 
 ```
 .
-├── app/                 # Next.js App Router: `/` (landing) e `/download`
+├── app/                 # Next.js App Router: `/` (landing), `/download`, `/desktop`
+│   ├── desktop/page.tsx # anteprima overlay desktop + compatibilità + modelli locali
+│   └── download/page.tsx# requisiti + privacy + istruzioni
 ├── components/
-│   ├── ui/              # shadcn/ui (button, card, tabs, sheet, dialog…)
-│   └── landing/         # Navbar, Hero, TrustBar… (uno per sezione, Fase 1-9)
+│   ├── ui/              # shadcn/ui (button, card, tabs, sheet, dialog, accordion…)
+│   └── landing/         # sezioni landing: Navbar, Hero, LogoMarquee, Compatibility,
+│                        # LocalModels, Integrations, Pricing, Faq, Tutorials, Mobile…
 ├── lib/
 │   ├── animations.ts    # varianti Framer Motion (solo transform/opacity)
 │   ├── content.ts       # copy centralizzata
+│   ├── compat.ts        # matrice compatibilità input
+│   ├── models.ts        # catalogo modelli AI locali
 │   ├── supabase/        # client browser/server
 │   └── utils.ts
+├── supabase/
+│   ├── config.toml      # Edge Functions transcribe / transcribe-audio / apply-mode
+│   ├── functions/       # proxy Whisper (nessuna chiave nel bundle)
+│   └── migrations/      # newsletter_signups (RLS insert-only)
+├── desktop/             # app Electron (tray, hotkey, overlay, impostazioni) — vedi desktop/README.md
+├── mobile/              # app Flutter (push-to-talk Android/iOS) — vedi mobile/README.md
+├── public/              # voiceflow-icon.svg + asset statici
 └── docs/
     ├── scope.md         # scope Giorno 1 (storico)
-    ├── deploy.md
+    ├── deploy.md        # deploy Vercel + env
     ├── landing/         # fase 0-9 (phase-gated)
-    └── archive/         # day summaries precedenti
+    └── archive/         # day summaries Giorno 1-3 (storici)
 ```
-
-> Separazione: questo repo è **solo Web**. L'app desktop è `Vertex/Desktop/voiceflow` (Electron, repo Git separato). Nessuna cartella condivisa.
 
 ## Requisiti
 
@@ -40,10 +48,19 @@ Stack: **Next.js (App Router) + TypeScript + Tailwind CSS + Supabase**. Deploy s
 
 ## Avvio
 
+Web (dalla root):
+
 ```bash
 npm install
 cp .env.example .env.local   # riempi i placeholder
 npm run dev                  # http://localhost:3000
+```
+
+Desktop e mobile hanno README e dipendenze proprie:
+
+```bash
+cd desktop && npm install && npm run dev   # Electron (vedi desktop/README.md)
+cd mobile && flutter pub get && flutter run # Flutter (vedi mobile/README.md, richiede Flutter SDK)
 ```
 
 Altri comandi:
@@ -72,7 +89,7 @@ Vercel, progetto `voiceflow` (scope `Vertex` / `vertex-9`), **Root Directory vuo
 framework Next.js. Git integration attiva su `main`: ogni push su `main` deploya in produzione,
 ogni PR ottiene una preview automatica.
 
-- Produzione → <https://voiceflow-flax.vercel.app> (`/` e `/download`)
+- Produzione → <https://voiceflow-voice.vercel.app> (`/` e `/download`)
 - Deploy manuale da CLI: `vercel --prod` (dalla root)
 
 Dettagli e checklist in [`docs/deploy.md`](docs/deploy.md).
@@ -83,9 +100,15 @@ Preview.
 
 ## Stato
 
-- Design system dark teal/indigo (`#0B0D10`, `#5EEAD4`, `#818CF8`) + Geist Sans/Mono, `lib/animations.ts`
-- Fase 0 completa (`landing/setup-design-system-*`), Fase 1 in corso (`landing/hero-demo-*`)
-- Pagina `/download` (requisiti + privacy + istruzioni dev)
-- shadcn/ui + Framer Motion (solo GPU props), newsletter futura `newsletter_signups` (RLS insert-only)
+- **Web:** landing Fase 0–9 completa (19 sezioni: Navbar, Hero cielo-alba, LogoMarquee, Compatibility,
+  LocalModels, Integrations, Pricing 3 piani, Faq, Tutorials, Mobile, footer…), tema chiaro/scuro
+  con toggle (`darkMode: "class"`), pagine `/download` e `/desktop`, newsletter `newsletter_signups`
+  (migration RLS insert-only). Design tokens correnti in `app/globals.css` (accento giallo `#FFD60A`,
+  palette sezioni verde/blu/rosso) + `tailwind.config.ts`
+- **Desktop** (`desktop/`): scaffolding Electron verificato il 2026-10-13 — `typecheck` e `build` OK
+  (`dist-electron/` + `dist/renderer/`); loop hold→trascrivi→incolla da completare su Windows reale
+- **Mobile** (`mobile/`): scaffolding Flutter completo (UI long-press + `TranscriptionService` verso
+  `transcribe-audio`); `flutter analyze/test` da eseguire dopo installazione Flutter SDK (assente su
+  questa macchina)
 
 Vedi `docs/README.md` e `docs/landing/fase0-setup.md` per dettaglio fasi.
