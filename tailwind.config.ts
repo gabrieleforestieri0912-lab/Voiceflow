@@ -13,12 +13,21 @@ export default {
         muted: "var(--muted)",
         dim: "var(--dim)",
         accent: "var(--accent)",
+        leaf: "var(--leaf)",
+        ocean: "var(--ocean)",
+        ember: "var(--ember)",
+        azure: "var(--azure)",
+        peach: "var(--peach)",
         success: "var(--success)",
         danger: "var(--danger)",
         border: "var(--border)",
       },
       backgroundColor: {
         accentSoft: "var(--accent-soft)",
+        leafSoft: "var(--leaf-soft)",
+        oceanSoft: "var(--ocean-soft)",
+        emberSoft: "var(--ember-soft)",
+        azureSoft: "var(--azure-soft)",
       },
       borderRadius: {
         card: "20px",
@@ -32,6 +41,7 @@ export default {
       boxShadow: {
         card: "0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 60px -20px rgba(0,0,0,0.6)",
         glow: "0 0 24px 0 var(--accent-glow), 0 0 64px -8px var(--accent-glow)",
+        pop: "0 10px 30px -12px rgba(0,0,0,0.55)",
       },
       transitionTimingFunction: {
         vocalis: "cubic-bezier(0.22, 1, 0.36, 1)",

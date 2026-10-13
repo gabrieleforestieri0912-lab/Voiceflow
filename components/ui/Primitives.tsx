@@ -12,7 +12,7 @@ type Common = {
 const styles = {
   base: "group inline-flex items-center justify-center gap-2 rounded-[12px] font-medium transition-all duration-micro ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:outline-accent active:scale-[0.98]",
   primary:
-    "bg-accent text-black hover:-translate-y-[1px] hover:shadow-glow",
+    "bg-foreground text-background hover:-translate-y-[1px] hover:shadow-pop",
   ghost: "border border-border bg-surface text-foreground hover:bg-surface-2",
   outline: "border border-border text-foreground hover:border-accent/40 hover:bg-accentSoft",
   sm: "px-3 py-1.5 text-sm",
