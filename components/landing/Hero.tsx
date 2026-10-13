@@ -1,182 +1,269 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { siteContent } from "@/lib/content";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { Play } from "lucide-react";
+import { ButtonLink } from "@/components/ui/Primitives";
+import { EASE } from "@/components/ui/Reveal";
+import { cn } from "@/lib/utils";
 
-function usePrefersReducedMotion() {
-  const hook = useReducedMotion();
-  const [pref, setPref] = useState(false);
-  useEffect(() => {
-    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => setPref(m.matches);
-    onChange();
-    m.addEventListener("change", onChange);
-    return () => m.removeEventListener("change", onChange);
+type DemoApp = "Cursor" | "Slack" | "Notes";
+
+const DEMO_TEXT: Record<DemoApp, string> = {
+  Cursor: "refactor the auth hook, extract the retry logic and add a unit test for expired tokens",
+  Slack: "hey team, shipping the beta notes tomorrow morning, please review the onboarding draft tonight",
+  Notes: "idea: voice-first shopping list with weekly templates and shared family mode",
+};
+
+const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+// Sfondo griglia lettere con effetto "ascolto"
+function LetterGrid() {
+  const reduce = useReducedMotion();
+  const [lit, setLit] = useState<Set<number>>(new Set());
+  const cells = useMemo(() => {
+    const arr: string[] = [];
+    for (let i = 0; i < 480; i++) arr.push(LETTERS[Math.floor(Math.random() * LETTERS.length)]);
+    return arr;
   }, []);
-  return hook || pref;
+
+  useEffect(() => {
+    if (reduce) return;
+    const id = window.setInterval(() => {
+      const next = new Set<number>();
+      const count = 8 + Math.floor(Math.random() * 10);
+      for (let i = 0; i < count; i++) next.add(Math.floor(Math.random() * 480));
+      setLit(next);
+      window.setTimeout(() => setLit(new Set()), 800);
+    }, 900);
+    return () => window.clearInterval(id);
+  }, [reduce]);
+
+  return (
+    <div aria-hidden className="mask-radial pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="grid h-full w-full grid-cols-[repeat(24,minmax(0,1fr))] gap-1 p-4 font-mono text-[14px] leading-none">
+        {cells.map((ch, i) => (
+          <span
+            key={i}
+            className="text-center transition-colors duration-700"
+            style={{ opacity: lit.has(i) ? 0.9 : 0.06, color: lit.has(i) ? "#FFD60A" : "#fff" } as React.CSSProperties}
+          >
+            {ch}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Waveform({ active }: { active: boolean }) {
+  const reduce = useReducedMotion();
+  const bars = 28;
+  return (
+    <div className="flex h-10 items-center gap-[3px]" aria-hidden>
+      {Array.from({ length: bars }).map((_, i) => (
+        <motion.span
+          key={i}
+          className="w-[3px] rounded-full bg-accent"
+          animate={
+            active && !reduce
+              ? { height: [6, 14 + Math.abs(Math.sin(i * 0.9)) * 22, 6] }
+              : { height: 5 }
+          }
+          transition={active && !reduce ? { duration: 0.7, repeat: Infinity, delay: i * 0.03, ease: "easeInOut" } : { duration: 0.2 }}
+          style={{ height: 5 }}
+        />
+      ))}
+    </div>
+  );
 }
 
 export function Hero() {
-  const prefersReduced = usePrefersReducedMotion();
-  const examples = siteContent.hero.typewriterExamples as unknown as string[];
-  const [index, setIndex] = useState(0);
+  const reduce = useReducedMotion();
+  const [app, setApp] = useState<DemoApp>("Cursor");
+  const [phase, setPhase] = useState<"idle" | "listening" | "typing">("idle");
   const [typed, setTyped] = useState("");
-  const [listening, setListening] = useState(false);
-  const intervalRef = useRef<number | null>(null);
+  const [textOnly, setTextOnly] = useState(false);
+  const timer = useRef<number[]>([]);
 
-  // Typewriter ciclico decisione #2 fallback — via setInterval, non CSS width
-  useEffect(() => {
-    if (prefersReduced) {
-      setTyped(examples[index]);
-      const id = window.setTimeout(() => setIndex((i) => (i + 1) % examples.length), 4000);
-      return () => clearTimeout(id);
-    }
-    const full = examples[index];
-    setTyped("");
-    let pos = 0;
-    intervalRef.current = window.setInterval(() => {
-      pos += 1;
-      setTyped(full.slice(0, pos));
-      if (pos >= full.length) {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        window.setTimeout(() => setIndex((i) => (i + 1) % examples.length), 1800);
+  const clearTimers = () => {
+    timer.current.forEach((t) => window.clearTimeout(t));
+    timer.current = [];
+  };
+
+  const runDemo = useCallback(
+    (nextApp: DemoApp = app) => {
+      clearTimers();
+      setTyped("");
+      if (textOnly || reduce) {
+        setPhase("typing");
+        setTyped(DEMO_TEXT[nextApp]);
+        return;
       }
-    }, 22);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [index, prefersReduced, examples]);
+      setPhase("listening");
+      timer.current.push(
+        window.setTimeout(() => {
+          setPhase("typing");
+          const full = DEMO_TEXT[nextApp];
+          let pos = 0;
+          const step = () => {
+            pos += 2;
+            setTyped(full.slice(0, pos));
+            if (pos < full.length) timer.current.push(window.setTimeout(step, 28));
+          };
+          step();
+        }, 1400)
+      );
+    },
+    [app, textOnly, reduce]
+  );
 
-  // Demo interattiva: Ctrl+Space reale → listening 1.5s → typewriter burst
-  const [demoActive, setDemoActive] = useState(false);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      const isCtrlSpace = (e.ctrlKey || e.metaKey) && e.code === "Space";
-      if (isCtrlSpace) {
+      if (e.altKey && e.code === "Space") {
         e.preventDefault();
-        setListening(true);
-        setDemoActive(true);
-        window.setTimeout(() => {
-          setListening(false);
-          setIndex((i) => (i + 1) % examples.length);
-          window.setTimeout(() => setDemoActive(false), 2000);
-        }, 900);
+        runDemo();
       }
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [examples.length]);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      clearTimers();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runDemo]);
 
-  const headlineWords = siteContent.hero.headline.join(" ").split(" ");
+  const headlineA = ["Just", "speak."];
+  const headlineB = ["Write", "faster."];
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Sfondo: radial gradient + dot grid leggera — no animazione pesante */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: `radial-gradient(600px 400px at 50% -10%, hsl(var(--accent) / 0.12), transparent 60%), radial-gradient(800px 600px at 90% 30%, hsl(var(--accent-secondary) / 0.08), transparent 60%)`,
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
-          backgroundSize: "24px 24px",
-        }}
-      />
+    <section id="top" className="relative overflow-hidden pb-10 pt-16 sm:pt-24">
+      <LetterGrid />
+      <div className="relative mx-auto max-w-6xl px-5 text-center sm:px-8">
+        <motion.h1 className="text-balance" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}>
+          <span className="block">
+            {headlineA.map((w) => (
+              <motion.span
+                key={w}
+                className="mr-[0.24em] inline-block last:mr-0"
+                variants={reduce ? {} : { hidden: { opacity: 0, y: 30, filter: "blur(8px)" }, show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: [...EASE] } } }}
+              >
+                {w}
+              </motion.span>
+            ))}
+          </span>
+          <span className="text-gradient-gray block">
+            {headlineB.map((w) => (
+              <motion.span
+                key={w}
+                className="mr-[0.24em] inline-block last:mr-0"
+                variants={reduce ? {} : { hidden: { opacity: 0, y: 30, filter: "blur(8px)" }, show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: [...EASE] } } }}
+              >
+                {w}
+              </motion.span>
+            ))}
+          </span>
+        </motion.h1>
 
-      <div className="relative mx-auto max-w-6xl px-6 py-14 sm:py-20">
-        <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-3xl">
-          <motion.p
-            variants={fadeInUp}
-            className="inline-flex rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium uppercase tracking-widest text-muted-foreground"
-          >
-            Solo Windows · Push-to-talk ovunque
-          </motion.p>
+        <motion.p
+          initial={reduce ? {} : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.25, ease: [...EASE] }}
+          className="mx-auto mt-5 max-w-xl text-balance text-muted"
+        >
+          Vocalis turns your voice into clean text anywhere you work. Hold a key, talk, release — done.
+        </motion.p>
+        <motion.p
+          initial={reduce ? {} : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.35 }}
+          className="mt-2 text-sm text-dim"
+        >
+          Works in Slack, Gmail and any other app
+        </motion.p>
 
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
-            <motion.span className="block" variants={staggerContainer} initial="hidden" animate="visible">
-              {headlineWords.map((w, i) => (
-                <motion.span
-                  key={`${w}-${i}`}
-                  variants={prefersReduced ? { hidden: { opacity: 0 }, visible: { opacity: 1 } } : fadeInUp}
-                  transition={prefersReduced ? { duration: 0.01 } : { delay: i * 0.03 }}
-                  className="inline-block pr-[0.25em] last:pr-0"
-                >
-                  {w}
-                </motion.span>
-              ))}
-            </motion.span>
-            <motion.span variants={fadeInUp} className="block text-muted-foreground">
-              Nativo Windows, non un porting.
-            </motion.span>
-          </h1>
-
-          <motion.p variants={fadeInUp} className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-            {siteContent.hero.sub}
-          </motion.p>
-
-          <motion.div variants={fadeInUp} className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="rounded-full bg-accent text-background hover:bg-accent/90">
-              <Link href="/download">{siteContent.hero.ctaPrimary}</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-full border-border bg-surface hover:bg-secondary">
-              <a href="#features">{siteContent.hero.ctaSecondary}</a>
-            </Button>
-          </motion.div>
-          <p className="mt-3 text-xs text-muted-foreground">Requisiti: Windows 10/11 64-bit · Microfono · Whisper via proxy, nessuna chiave nel bundle.</p>
+        <motion.div
+          initial={reduce ? {} : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4, ease: [...EASE] }}
+          className="mt-8 flex flex-wrap items-center justify-center gap-3"
+        >
+          <ButtonLink href="#pricing" size="lg">
+            Download
+          </ButtonLink>
+          <ButtonLink href="#tutorials" variant="ghost" size="lg" onClick={(e) => { e.preventDefault(); runDemo(); }}>
+            <Play size={16} /> Watch demo
+          </ButtonLink>
         </motion.div>
 
-        {/* Demo scorciatoia */}
+        {/* Demo interattiva */}
         <motion.div
-          initial={prefersReduced ? { opacity: 1 } : { opacity: 0, y: 16 }}
+          initial={reduce ? { opacity: 1 } : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-10 rounded-2xl border border-border bg-surface/60 p-4 backdrop-blur sm:p-5"
+          transition={{ duration: 0.7, delay: 0.5, ease: [...EASE] }}
+          className="card-shadow mx-auto mt-10 max-w-2xl rounded-card border border-border bg-surface p-4 text-left sm:p-5"
         >
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="relative flex h-9 w-9 items-center justify-center">
-                {/* Pallino pulsante — solo scale/opacity */}
-                <motion.span
-                  aria-hidden
-                  className="absolute inset-0 rounded-full bg-accent/30"
-                  animate={listening && !prefersReduced ? { scale: [1, 1.35, 1], opacity: [0.6, 0.15, 0.6] } : {}}
-                  transition={listening && !prefersReduced ? { duration: 1.1, repeat: Infinity, ease: "easeInOut" } : {}}
-                />
-                <span className={`relative h-2.5 w-2.5 rounded-full ${listening ? "bg-accent" : "bg-muted-foreground"} ${listening && !prefersReduced ? "animate-pulse" : ""}`} />
-              </div>
-              <div>
-                <p className="text-sm font-medium">{listening ? "Sto ascoltando…" : siteContent.hero.shortcutHint}</p>
-                <p className="text-xs text-muted-foreground">
-                  Tieni premuto <kbd className="rounded bg-secondary px-1.5 py-0.5 font-mono text-xs">Ctrl</kbd> +{" "}
-                  <kbd className="rounded bg-secondary px-1.5 py-0.5 font-mono text-xs">Space</kbd> {demoActive ? "— demo attiva" : "— prova ora"}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <span className="hidden sm:inline">Testo trascritto:</span>
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={`${index}-${typed.length}`}
-                  initial={prefersReduced ? { opacity: 1 } : { opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: prefersReduced ? 0.01 : 0.25 }}
-                  className="min-h-[20px] max-w-[36ch] truncate font-mono text-sm text-foreground sm:max-w-[42ch]"
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="relative flex rounded-pill border border-border bg-background p-1" role="tablist" aria-label="Demo app">
+              {(["Cursor", "Slack", "Notes"] as DemoApp[]).map((a) => (
+                <button
+                  key={a}
+                  role="tab"
+                  aria-selected={app === a}
+                  onClick={() => {
+                    setApp(a);
+                    runDemo(a);
+                  }}
+                  className={cn("relative rounded-pill px-4 py-1.5 text-sm transition-colors", app === a ? "text-black" : "text-muted hover:text-foreground")}
                 >
-                  {typed}
-                  <span className="ml-0.5 inline-block h-3 w-[2px] -mb-0.5 bg-accent" />
-                </motion.p>
-              </AnimatePresence>
+                  {app === a && (
+                    <motion.span layoutId="demo-pill" className="absolute inset-0 rounded-pill bg-accent" transition={{ duration: 0.4, ease: [...EASE] }} />
+                  )}
+                  <span className="relative">{a}</span>
+                </button>
+              ))}
             </div>
+            <p className="text-xs text-dim">
+              Premi <kbd>⌥</kbd> + <kbd>space</kbd> per dettare
+            </p>
+          </div>
+
+          <button
+            onClick={() => runDemo()}
+            className="mt-4 block w-full rounded-[14px] border border-border bg-background p-4 text-left transition-colors hover:border-accent/30"
+            aria-label="Run dictation demo"
+          >
+            <div className="mb-2 flex items-center gap-2 text-xs text-dim">
+              <span className={cn("h-2 w-2 rounded-full", phase === "listening" ? "animate-pulse bg-accent" : "bg-dim")} />
+              {phase === "idle" ? `Ready in ${app} — click to dictate` : phase === "listening" ? "Listening…" : `Pasted in ${app}`}
+            </div>
+            {phase === "listening" && !textOnly ? (
+              <Waveform active />
+            ) : (
+              <p className="min-h-[48px] font-mono text-[15px] leading-relaxed">
+                {typed || <span className="text-dim">— press the keys and speak —</span>}
+                {phase === "typing" && typed.length < DEMO_TEXT[app].length && <span className="cursor-blink ml-0.5 inline-block h-4 w-[2px] bg-accent align-middle" />}
+              </p>
+            )}
+          </button>
+
+          <div className="mt-3 text-center">
+            <AnimatePresence mode="wait">
+              {!textOnly ? (
+                <motion.button
+                  key="q"
+                  exit={{ opacity: 0 }}
+                  onClick={() => setTextOnly(true)}
+                  className="text-xs text-dim underline-offset-4 hover:text-muted hover:underline"
+                >
+                  Non puoi parlare ora? Guarda la demo in modalità solo testo.
+                </motion.button>
+              ) : (
+                <motion.p key="t" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-dim">
+                  Modalità solo testo attiva — nessun microfono richiesto.
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>
