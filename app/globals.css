@@ -29,7 +29,7 @@
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
+  :root:not(.dark):not(.light) {
     color-scheme: light;
     --background: #fafafa;
     --surface: #ffffff;
@@ -42,6 +42,35 @@
     --accent-soft: rgba(200, 160, 0, 0.12);
     --accent-glow: rgba(200, 160, 0, 0.25);
   }
+}
+
+/* Toggle manuale: html.light forza il tema chiaro anche con OS scuro.
+   Default resta scuro (html.dark o nessun attributo). */
+html.light {
+  color-scheme: light;
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f1f1f1;
+  --border: rgba(0, 0, 0, 0.08);
+  --foreground: #0a0a0a;
+  --muted: #525252;
+  --muted-foreground: #525252;
+  --dim: #8a8a8a;
+  --accent-soft: rgba(200, 160, 0, 0.12);
+  --accent-glow: rgba(200, 160, 0, 0.25);
+}
+
+html.light .text-gradient-gray {
+  background: linear-gradient(180deg, #0a0a0a 20%, #8a8a8a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html.light .card-shadow {
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.04) inset,
+    0 20px 60px -24px rgba(0, 0, 0, 0.25);
 }
 
 @theme inline {

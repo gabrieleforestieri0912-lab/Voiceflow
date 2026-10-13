@@ -1,0 +1,20 @@
+import { Navbar } from "@/components/landing/Navbar";
+import { DesktopOverlay } from "@/components/landing/DesktopOverlay";
+import { SiteFooter } from "@/components/landing/SiteFooter";
+
+export const metadata = {
+  title: "Vocalis Desktop — overlay + shortcut",
+  description: "Anteprima dell'interfaccia desktop Vocalis: pill con 3 bottoni in alto al centro e shortcut per la registrazione vocale.",
+};
+
+export default function DesktopPage() {
+  return (
+    <div className="min-h-screen overflow-x-clip">
+      <Navbar />
+      <main>
+        <DesktopOverlay />
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}

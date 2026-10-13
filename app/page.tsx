@@ -7,6 +7,7 @@ import { WhatsInside } from "@/components/landing/WhatsInside";
 
 // Heavy sections lazy-loaded to avoid layout shift / large initial bundle
 const AppMockup = dynamic(() => import("@/components/landing/AppMockup").then((m) => m.AppMockup), { ssr: true });
+const DesktopOverlay = dynamic(() => import("@/components/landing/DesktopOverlay").then((m) => m.DesktopOverlay), { ssr: true });
 const CustomMode = dynamic(() => import("@/components/landing/CustomMode").then((m) => m.CustomMode), { ssr: true });
 const Integrations = dynamic(() => import("@/components/landing/Integrations").then((m) => m.Integrations), { ssr: true });
 const AgenticCoding = dynamic(() => import("@/components/landing/AgenticCoding").then((m) => m.AgenticCoding), { ssr: true });
@@ -27,6 +28,7 @@ export default function Page() {
         <Adaptability />
         <WhatsInside />
         <AppMockup />
+        <DesktopOverlay />
         <CustomMode />
         <Integrations />
         <AgenticCoding />

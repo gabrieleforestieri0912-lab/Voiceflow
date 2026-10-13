@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Download } from "lucide-react";
 import { Logo, ButtonLink } from "@/components/ui/Primitives";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "Product", href: "#inside" },
-  { label: "Use cases", href: "#adaptability" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Docs", href: "#tutorials" },
+  { label: "Product", href: "/#inside" },
+  { label: "Desktop", href: "/desktop" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "Docs", href: "/#tutorials" },
 ];
 
 export function Navbar() {
@@ -40,19 +41,23 @@ export function Navbar() {
             </a>
           ))}
         </div>
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle />
           <ButtonLink href="#pricing" size="sm">
             <Download size={15} /> Download
           </ButtonLink>
         </div>
-        <button
-          className="grid h-10 w-10 place-items-center rounded-[10px] border border-border bg-surface md:hidden"
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            className="grid h-10 w-10 place-items-center rounded-[10px] border border-border bg-surface"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
         >
           {open ? <X size={18} /> : <Menu size={18} />}
         </button>
+        </div>
       </nav>
       <AnimatePresence>
         {open && (
